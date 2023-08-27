@@ -1,0 +1,2 @@
+input any state
+output Bloch sphere angles and point
