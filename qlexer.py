@@ -15,6 +15,7 @@ tokens = (
     'state_minus',
     'state_i',
     'state_minus_i',
+    # gates one qubit
     'X',
     'Y',
     'Z',
@@ -35,6 +36,8 @@ tokens = (
     # parentheses
     'LPAREN',
     'RPAREN',
+    'LBRACKET',
+    'RBRACKET',
     # math fx
     'i',
     'SQRT',
@@ -152,6 +155,8 @@ t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
 
 
 def t_PLUS(t):
@@ -205,6 +210,8 @@ sqrt
 55.0
 (
 )
+[
+]
 i
 '''
 # Give the lexer some input
