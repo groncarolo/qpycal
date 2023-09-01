@@ -70,3 +70,7 @@ def remove_global_phase(c):
         c[0] = polar_2_cartesian_coordinates(mag[0], 0)
         c[1] = polar_2_cartesian_coordinates(mag[1], ang[1] - ang[0])
     return c
+
+
+def tensor_prod(a, b):
+    return np.kron(a, b)
