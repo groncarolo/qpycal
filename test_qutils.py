@@ -1,6 +1,8 @@
 import numpy as np
-from qutils import *
 import pytest
+
+from qutils import *
+
 
 testdata_cartesian_coord = [
     ("|0>", np.array([0., 0.]), np.array([0., 0., 1.])),
