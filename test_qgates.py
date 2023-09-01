@@ -61,7 +61,7 @@ def test_gates(state, g, t):
     print("")
     print_spherical_coordinates(r)
 
-    rstate = apply(g, state.state)
+    rstate = apply_gate(g, state.state)
     c = complex_2_spherical_coordinates(rstate)
     print_spherical_coordinates(c)
-    assert (np.allclose(rstate, t))
+    assert np.allclose(rstate, t)
