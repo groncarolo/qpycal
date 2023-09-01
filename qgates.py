@@ -37,3 +37,11 @@ class HGate:
 
 class Identity:
     gate = np.identity(2)
+
+
+class CNot10:
+    gate = np.array([[1., 0., 0., 0.], [0., 1., 0., 0.], [0., 0., 0., 1.], [0., 0., 1., 0.]])
+
+
+class CNot01:
+    gate = np.array([[1., 0., 0., 0.], [0., 0., 0., 1.], [0., 0., 1., 0.], [0., 1., 0., 0.]])
