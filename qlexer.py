@@ -24,8 +24,8 @@ tokens = (
     'H',
     'I',
     # gates two qubit
-    'CNOT10',
-    'CNOT01',
+    'C',
+    'A',
     # digits
     'NUMBER',
     # operation
@@ -122,15 +122,15 @@ def t_I(t):
     return t
 
 
-def t_CNOT10(t):
-    'CNOT10'
-    t.value = qgates.CNot10()
+def t_C(t):
+    'C'
+    t.value = qgates.Ctrl()
     return t
 
 
-def t_CNOT01(t):
-    'CNOT01'
-    t.value = qgates.CNot01()
+def t_A(t):
+    'A'
+    t.value = qgates.ACtrl()
     return t
 
 
@@ -200,8 +200,8 @@ Y
 Z
 S
 T
-CNOT10
-CNOT01
+C
+A
 +
 -
 /
