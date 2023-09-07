@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CNOT01 CNOT10 DIVIDE H I LBRACKET LPAREN MINUS NUMBER PLUS RBRACKET RPAREN S SQRT T TIMES X Y Z i state_0 state_1 state_i state_minus state_minus_i state_pluscircuit : states gatesfactor : NUMBER\n              | SQRT LPAREN NUMBER RPAREN\n              | NUMBER TIMES SQRT LPAREN NUMBER RPARENoperand : MINUS\n               | PLUSfactors : factor\n               | factor DIVIDE factor\n               | LPAREN factor operand i TIMES factor RPAREN DIVIDE factorstates : states TIMES comp_state\n    | comp_statecomp_state : state\n                  | factors state\n                  | LBRACKET factors state operand factors state RBRACKETstate : state_0\n    | state_1\n    | state_plus\n    | state_minus\n    | state_i\n    | state_minus_igates : gates gate\n              | gates TIMES gate\n              | gategate : X\n           | Y\n           | Z\n           | S\n           | T\n           | H\n           | I\n           | CNOT10\n           | CNOT01\n    '
+_lr_signature = 'A C DIVIDE H I LBRACKET LPAREN MINUS NUMBER PLUS RBRACKET RPAREN S SQRT T TIMES X Y Z i state_0 state_1 state_i state_minus state_minus_i state_pluscircuit : states gatesfactor : NUMBER\n              | SQRT LPAREN NUMBER RPAREN\n              | NUMBER TIMES SQRT LPAREN NUMBER RPARENoperand : MINUS\n               | PLUSfactors : factor\n               | factor DIVIDE factor\n               | LPAREN factor operand i TIMES factor RPAREN DIVIDE factorstates : states TIMES comp_state\n    | comp_statecomp_state : state\n                  | factors state\n                  | LBRACKET factors state operand factors state RBRACKETstate : state_0\n    | state_1\n    | state_plus\n    | state_minus\n    | state_i\n    | state_minus_igates : gates gate\n              | gates TIMES gate\n              | gategate : X\n           | Y\n           | Z\n           | S\n           | T\n           | H\n           | I\n           | C\n           | A\n    '
     
-_lr_action_items = {'LBRACKET':([0,18,],[6,6,]),'state_0':([0,5,13,15,18,30,39,49,50,55,59,],[7,7,-7,-2,7,7,-8,-3,7,-4,-9,]),'state_1':([0,5,13,15,18,30,39,49,50,55,59,],[8,8,-7,-2,8,8,-8,-3,8,-4,-9,]),'state_plus':([0,5,13,15,18,30,39,49,50,55,59,],[9,9,-7,-2,9,9,-8,-3,9,-4,-9,]),'state_minus':([0,5,13,15,18,30,39,49,50,55,59,],[10,10,-7,-2,10,10,-8,-3,10,-4,-9,]),'state_i':([0,5,13,15,18,30,39,49,50,55,59,],[11,11,-7,-2,11,11,-8,-3,11,-4,-9,]),'state_minus_i':([0,5,13,15,18,30,39,49,50,55,59,],[12,12,-7,-2,12,12,-8,-3,12,-4,-9,]),'LPAREN':([0,6,16,18,41,42,43,46,],[14,14,34,14,-5,-6,48,14,]),'NUMBER':([0,6,14,18,31,34,41,42,46,48,51,58,],[15,15,15,15,15,44,-5,-6,15,52,15,15,]),'SQRT':([0,6,14,18,31,33,41,42,46,51,58,],[16,16,16,16,16,43,-5,-6,16,16,16,]),'$end':([1,17,19,20,21,22,23,24,25,26,27,28,35,45,],[0,-1,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-21,-22,]),'TIMES':([2,3,4,7,8,9,10,11,12,15,17,19,20,21,22,23,24,25,26,27,28,29,35,37,45,47,56,],[18,-11,-12,-15,-16,-17,-18,-19,-20,33,36,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,-10,-22,51,-14,]),'X':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[20,-11,-12,-15,-16,-17,-18,-19,-20,20,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,20,-10,-22,-14,]),'Y':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[21,-11,-12,-15,-16,-17,-18,-19,-20,21,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,21,-10,-22,-14,]),'Z':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[22,-11,-12,-15,-16,-17,-18,-19,-20,22,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,22,-10,-22,-14,]),'S':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[23,-11,-12,-15,-16,-17,-18,-19,-20,23,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,23,-10,-22,-14,]),'T':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[24,-11,-12,-15,-16,-17,-18,-19,-20,24,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,24,-10,-22,-14,]),'H':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[25,-11,-12,-15,-16,-17,-18,-19,-20,25,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,25,-10,-22,-14,]),'I':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[26,-11,-12,-15,-16,-17,-18,-19,-20,26,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,26,-10,-22,-14,]),'CNOT10':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[27,-11,-12,-15,-16,-17,-18,-19,-20,27,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,27,-10,-22,-14,]),'CNOT01':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[28,-11,-12,-15,-16,-17,-18,-19,-20,28,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,28,-10,-22,-14,]),'MINUS':([7,8,9,10,11,12,15,32,38,49,55,],[-15,-16,-17,-18,-19,-20,-2,41,41,-3,-4,]),'PLUS':([7,8,9,10,11,12,15,32,38,49,55,],[-15,-16,-17,-18,-19,-20,-2,42,42,-3,-4,]),'RBRACKET':([7,8,9,10,11,12,53,],[-15,-16,-17,-18,-19,-20,56,]),'DIVIDE':([13,15,49,55,57,],[31,-2,-3,-4,58,]),'RPAREN':([15,44,49,52,54,55,],[-2,49,-3,55,57,-4,]),'i':([40,41,42,],[47,-5,-6,]),}
+_lr_action_items = {'LBRACKET':([0,18,],[6,6,]),'state_0':([0,5,13,15,18,30,39,49,50,55,59,],[7,7,-7,-2,7,7,-8,-3,7,-4,-9,]),'state_1':([0,5,13,15,18,30,39,49,50,55,59,],[8,8,-7,-2,8,8,-8,-3,8,-4,-9,]),'state_plus':([0,5,13,15,18,30,39,49,50,55,59,],[9,9,-7,-2,9,9,-8,-3,9,-4,-9,]),'state_minus':([0,5,13,15,18,30,39,49,50,55,59,],[10,10,-7,-2,10,10,-8,-3,10,-4,-9,]),'state_i':([0,5,13,15,18,30,39,49,50,55,59,],[11,11,-7,-2,11,11,-8,-3,11,-4,-9,]),'state_minus_i':([0,5,13,15,18,30,39,49,50,55,59,],[12,12,-7,-2,12,12,-8,-3,12,-4,-9,]),'LPAREN':([0,6,16,18,41,42,43,46,],[14,14,34,14,-5,-6,48,14,]),'NUMBER':([0,6,14,18,31,34,41,42,46,48,51,58,],[15,15,15,15,15,44,-5,-6,15,52,15,15,]),'SQRT':([0,6,14,18,31,33,41,42,46,51,58,],[16,16,16,16,16,43,-5,-6,16,16,16,]),'$end':([1,17,19,20,21,22,23,24,25,26,27,28,35,45,],[0,-1,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-21,-22,]),'TIMES':([2,3,4,7,8,9,10,11,12,15,17,19,20,21,22,23,24,25,26,27,28,29,35,37,45,47,56,],[18,-11,-12,-15,-16,-17,-18,-19,-20,33,36,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,-10,-22,51,-14,]),'X':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[20,-11,-12,-15,-16,-17,-18,-19,-20,20,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,20,-10,-22,-14,]),'Y':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[21,-11,-12,-15,-16,-17,-18,-19,-20,21,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,21,-10,-22,-14,]),'Z':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[22,-11,-12,-15,-16,-17,-18,-19,-20,22,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,22,-10,-22,-14,]),'S':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[23,-11,-12,-15,-16,-17,-18,-19,-20,23,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,23,-10,-22,-14,]),'T':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[24,-11,-12,-15,-16,-17,-18,-19,-20,24,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,24,-10,-22,-14,]),'H':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[25,-11,-12,-15,-16,-17,-18,-19,-20,25,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,25,-10,-22,-14,]),'I':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[26,-11,-12,-15,-16,-17,-18,-19,-20,26,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,26,-10,-22,-14,]),'C':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[27,-11,-12,-15,-16,-17,-18,-19,-20,27,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,27,-10,-22,-14,]),'A':([2,3,4,7,8,9,10,11,12,17,19,20,21,22,23,24,25,26,27,28,29,35,36,37,45,56,],[28,-11,-12,-15,-16,-17,-18,-19,-20,28,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-13,-21,28,-10,-22,-14,]),'MINUS':([7,8,9,10,11,12,15,32,38,49,55,],[-15,-16,-17,-18,-19,-20,-2,41,41,-3,-4,]),'PLUS':([7,8,9,10,11,12,15,32,38,49,55,],[-15,-16,-17,-18,-19,-20,-2,42,42,-3,-4,]),'RBRACKET':([7,8,9,10,11,12,53,],[-15,-16,-17,-18,-19,-20,56,]),'DIVIDE':([13,15,49,55,57,],[31,-2,-3,-4,58,]),'RPAREN':([15,44,49,52,54,55,],[-2,49,-3,55,57,-4,]),'i':([40,41,42,],[47,-5,-6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,36 +27,36 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> circuit","S'",1,None,None,None),
-  ('circuit -> states gates','circuit',2,'p_circuit','qpycalc.py',14),
-  ('factor -> NUMBER','factor',1,'p_factor','qpycalc.py',27),
-  ('factor -> SQRT LPAREN NUMBER RPAREN','factor',4,'p_factor','qpycalc.py',28),
-  ('factor -> NUMBER TIMES SQRT LPAREN NUMBER RPAREN','factor',6,'p_factor','qpycalc.py',29),
-  ('operand -> MINUS','operand',1,'p_opearand','qpycalc.py',42),
-  ('operand -> PLUS','operand',1,'p_opearand','qpycalc.py',43),
-  ('factors -> factor','factors',1,'p_factors','qpycalc.py',48),
-  ('factors -> factor DIVIDE factor','factors',3,'p_factors','qpycalc.py',49),
-  ('factors -> LPAREN factor operand i TIMES factor RPAREN DIVIDE factor','factors',9,'p_factors','qpycalc.py',50),
-  ('states -> states TIMES comp_state','states',3,'p_states','qpycalc.py',64),
-  ('states -> comp_state','states',1,'p_states','qpycalc.py',65),
-  ('comp_state -> state','comp_state',1,'p_comp_states','qpycalc.py',77),
-  ('comp_state -> factors state','comp_state',2,'p_comp_states','qpycalc.py',78),
-  ('comp_state -> LBRACKET factors state operand factors state RBRACKET','comp_state',7,'p_comp_states','qpycalc.py',79),
-  ('state -> state_0','state',1,'p_state','qpycalc.py',103),
-  ('state -> state_1','state',1,'p_state','qpycalc.py',104),
-  ('state -> state_plus','state',1,'p_state','qpycalc.py',105),
-  ('state -> state_minus','state',1,'p_state','qpycalc.py',106),
-  ('state -> state_i','state',1,'p_state','qpycalc.py',107),
-  ('state -> state_minus_i','state',1,'p_state','qpycalc.py',108),
-  ('gates -> gates gate','gates',2,'p_gates','qpycalc.py',115),
-  ('gates -> gates TIMES gate','gates',3,'p_gates','qpycalc.py',116),
-  ('gates -> gate','gates',1,'p_gates','qpycalc.py',117),
-  ('gate -> X','gate',1,'p_gate','qpycalc.py',133),
-  ('gate -> Y','gate',1,'p_gate','qpycalc.py',134),
-  ('gate -> Z','gate',1,'p_gate','qpycalc.py',135),
-  ('gate -> S','gate',1,'p_gate','qpycalc.py',136),
-  ('gate -> T','gate',1,'p_gate','qpycalc.py',137),
-  ('gate -> H','gate',1,'p_gate','qpycalc.py',138),
-  ('gate -> I','gate',1,'p_gate','qpycalc.py',139),
-  ('gate -> CNOT10','gate',1,'p_gate','qpycalc.py',140),
-  ('gate -> CNOT01','gate',1,'p_gate','qpycalc.py',141),
+  ('circuit -> states gates','circuit',2,'p_circuit','qparser.py',11),
+  ('factor -> NUMBER','factor',1,'p_factor','qparser.py',30),
+  ('factor -> SQRT LPAREN NUMBER RPAREN','factor',4,'p_factor','qparser.py',31),
+  ('factor -> NUMBER TIMES SQRT LPAREN NUMBER RPAREN','factor',6,'p_factor','qparser.py',32),
+  ('operand -> MINUS','operand',1,'p_opearand','qparser.py',43),
+  ('operand -> PLUS','operand',1,'p_opearand','qparser.py',44),
+  ('factors -> factor','factors',1,'p_factors','qparser.py',50),
+  ('factors -> factor DIVIDE factor','factors',3,'p_factors','qparser.py',51),
+  ('factors -> LPAREN factor operand i TIMES factor RPAREN DIVIDE factor','factors',9,'p_factors','qparser.py',52),
+  ('states -> states TIMES comp_state','states',3,'p_states','qparser.py',64),
+  ('states -> comp_state','states',1,'p_states','qparser.py',65),
+  ('comp_state -> state','comp_state',1,'p_comp_states','qparser.py',74),
+  ('comp_state -> factors state','comp_state',2,'p_comp_states','qparser.py',75),
+  ('comp_state -> LBRACKET factors state operand factors state RBRACKET','comp_state',7,'p_comp_states','qparser.py',76),
+  ('state -> state_0','state',1,'p_state','qparser.py',94),
+  ('state -> state_1','state',1,'p_state','qparser.py',95),
+  ('state -> state_plus','state',1,'p_state','qparser.py',96),
+  ('state -> state_minus','state',1,'p_state','qparser.py',97),
+  ('state -> state_i','state',1,'p_state','qparser.py',98),
+  ('state -> state_minus_i','state',1,'p_state','qparser.py',99),
+  ('gates -> gates gate','gates',2,'p_gates','qparser.py',106),
+  ('gates -> gates TIMES gate','gates',3,'p_gates','qparser.py',107),
+  ('gates -> gate','gates',1,'p_gates','qparser.py',108),
+  ('gate -> X','gate',1,'p_gate','qparser.py',125),
+  ('gate -> Y','gate',1,'p_gate','qparser.py',126),
+  ('gate -> Z','gate',1,'p_gate','qparser.py',127),
+  ('gate -> S','gate',1,'p_gate','qparser.py',128),
+  ('gate -> T','gate',1,'p_gate','qparser.py',129),
+  ('gate -> H','gate',1,'p_gate','qparser.py',130),
+  ('gate -> I','gate',1,'p_gate','qparser.py',131),
+  ('gate -> C','gate',1,'p_gate','qparser.py',132),
+  ('gate -> A','gate',1,'p_gate','qparser.py',133),
 ]

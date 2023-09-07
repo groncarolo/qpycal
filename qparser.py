@@ -129,8 +129,8 @@ def p_gate(p):
            | T
            | H
            | I
-           | CNOT10
-           | CNOT01
+           | C
+           | A
     '''
     p[0] = p[1]
     logging.info("p_gate")
