@@ -1,11 +1,11 @@
 import logging
 
 from ply import yacc
-import numpy as np
 
 from qgates import apply_gate, Gate, Ctrl, ACtrl, XGate
-from qstates import is_normalized, State, get_U_10, get_U_01
-from qutils import tensor_prod
+from qstates import is_state_normalized, State
+from qunitary import get_unitary_10, get_unitary_01
+from qmath import tensor_prod
 from qlexer import tokens
 from functools import reduce
 
@@ -30,7 +30,7 @@ def p_circuit(p):
     else:
         state = p[1][0]
 
-    if not is_normalized(state):
+    if not is_state_normalized(state):
         raise
     ret = state.state
     for col in p[2]:
@@ -43,33 +43,33 @@ def p_circuit(p):
 
         if len(col) > 1:
             # look for a control
-            ctrls = [i for i, e in enumerate(col) if type(e) == type(Ctrl())]
+            ctrls = [i for i, e in enumerate(col) if isinstance(e, Ctrl)]
             logging.info("ctrls")
             logging.info(ctrls)
-            actrls = [i for i, e in enumerate(col) if type(e) == type(ACtrl())]
+            actrls = [i for i, e in enumerate(col) if isinstance(e, ACtrl)]
             logging.info("actrls")
             logging.info(actrls)
-            nots = [i for i, e in enumerate(col) if type(e) == type(XGate())]
+            nots = [i for i, e in enumerate(col) if isinstance(e, XGate)]
             logging.info("nots")
             logging.info(nots)
 
             if len(ctrls) > 0:
                 # remove from list between indexes
                 if ctrls[0] < nots[0]:
-                    start_index=ctrls[0]
-                    end_index=nots[0]+1
-                    op=get_U_10
+                    start_index = ctrls[0]
+                    end_index = nots[0] + 1
+                    op = get_unitary_10
                 else:
                     start_index = nots[0]
-                    end_index = ctrls[0]+1
-                    op = get_U_01
+                    end_index = ctrls[0] + 1
+                    op = get_unitary_01
                 del col[start_index:end_index]
 
                 logging.info("now col is:")
                 logging.info(col)
                 # if there is nothing else in the column
                 # this is the final gate
-                g = Gate(op(2**(end_index-start_index), XGate.gate))
+                g = Gate(op(2 ** (end_index - start_index), XGate.gate))
                 if len(col) == 0:
                     complete = g
                 else:
@@ -88,13 +88,13 @@ def p_circuit(p):
         logging.info(ret)
         logging.info("^^^^^^^^^^^")
 
-    p[0] = ret,len(p[1])
+    p[0] = ret, len(p[1])
 
 
 def p_factor(p):
-    '''factor : NUMBER
-              | SQRT LPAREN NUMBER RPAREN
-              | NUMBER TIMES SQRT LPAREN NUMBER RPAREN'''
+    '''factor : number
+              | sqrt lparen number rparen
+              | number times sqrt lparen number rparen'''
     logging.info("p_factor")
     if len(p) == 2:
         p[0] = p[1]
@@ -105,16 +105,16 @@ def p_factor(p):
 
 
 def p_opearand(p):
-    '''operand : MINUS
-               | PLUS'''
+    '''operand : minus
+               | plus'''
     logging.info("p_operand")
     p[0] = 1.0 * p[1]
 
 
 def p_factors(p):
     '''factors : factor
-               | factor DIVIDE factor
-               | LPAREN factor operand i TIMES factor RPAREN DIVIDE factor'''
+               | factor divide factor
+               | lparen factor operand i times factor rparen divide factor'''
 
     logging.info("p_factors")
     if len(p) == 2:
@@ -126,7 +126,7 @@ def p_factors(p):
 
 
 def p_states(p):
-    '''states : states TIMES comp_state
+    '''states : states times comp_state
     | comp_state'''
     logging.info("p_states")
     if len(p) == 2:
@@ -141,7 +141,7 @@ def p_states(p):
 def p_comp_states(p):
     '''comp_state : state
                   | factors state
-                  | LBRACKET factors state operand factors state RBRACKET'''
+                  | lbracket factors state operand factors state rbracket'''
     logging.info("p_comp_states")
     if len(p) == 2:
         p[0] = p[1]
@@ -172,7 +172,7 @@ def p_state(p):
 
 def p_gates(p):
     r'''gates : gates gate
-              | gates TIMES gate
+              | gates times gate
               | gate'''
     logging.info("p_gates")
 
@@ -193,15 +193,15 @@ def p_gates(p):
 
 
 def p_gate(p):
-    '''gate : X
-           | Y
-           | Z
-           | S
-           | T
-           | H
-           | I
-           | C
-           | A
+    '''gate : gate_x
+           | gate_y
+           | gate_z
+           | gate_s
+           | gate_t
+           | gate_h
+           | gate_i
+           | gate_c
+           | gate_a
     '''
     p[0] = p[1]
     logging.info("p_gate")

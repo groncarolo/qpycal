@@ -1,0 +1,9 @@
+flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+0
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+./qparser.py:9:1: F401 'qlexer.tokens' imported but unused
+./qjson.py:34:6: E225 missing whitespace around operator
+./qjson.py:39:10: E225 missing whitespace around operator
+2     E225 missing whitespace around operator
+1     F401 'qlexer.tokens' imported but unused
+3

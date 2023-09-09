@@ -5,7 +5,7 @@ import numpy as np
 
 
 def from_json_gate(json_str):
-    from_json_gate_dic = {"1": "I", "Z^¼": "T", "•" : "C"}
+    from_json_gate_dic = {"1": "I", "Z^¼": "T", "•": "C"}
     return from_json_gate_dic.get(str(json_str), str(json_str))
 
 
@@ -31,11 +31,11 @@ def from_json(jstr):
     logging.info(circuit)
 
     result = np.zeros(2**how_many_states, dtype=complex)
-    i=0
+    i = 0
     for o in j["output_amplitudes"]:
         real = o["r"]
         imag = o["i"]
         result[i] = float(real) + 1j*float(imag)
-        i=i+1
+        i = i + 1
 
     return circuit, result
