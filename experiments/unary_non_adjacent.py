@@ -279,3 +279,4 @@ state = np.kron(np.kron(np.kron(np.kron(input4, input3), input2), input1), input
 
 g0 = get_U_01(state.shape[0], GateX)
 np.dot(g0, state).reshape(8,4)
+
