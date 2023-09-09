@@ -1,8 +1,12 @@
+'''
+test all simple gates against all basic states
+'''
 import numpy as np
 import pytest
-from qgates import *
-from qstates import *
-from qutils import *
+
+from qgates import XGate, YGate, ZGate, SGate, TGate, HGate, apply_gate
+from qstates import State0, StatePlus, State1, StateMinus, StateMinusI, StateI
+from qutils import complex_2_spherical_coordinates, print_spherical_coordinates
 
 testdata_gates = [
     # X_GATE

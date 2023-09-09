@@ -49,8 +49,8 @@ def main():
                 a = int(np.sqrt(ret.shape[0]))
                 b = int(np.sqrt(ret.shape[0]))
             else:
-                b = int(np.sqrt(ret.shape[0]*2))
-                a = b //2
+                b = int(np.sqrt(ret.shape[0] * 2))
+                a = b // 2
 
             print(ret.reshape(b, a))
 
