@@ -25,6 +25,7 @@ tokens = (
     'gate_i',
     'gate_c',
     'gate_a',
+    'gate_swap',
     # digits
     'number',
     # operation
@@ -133,6 +134,12 @@ def t_gate_a(t):
     return t
 
 
+def t_gate_swap(t):
+    'W'
+    t.value = qgates.SwapPlaceHolder()
+    return t
+
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -201,6 +208,7 @@ S
 T
 C
 A
+W
 +
 -
 /

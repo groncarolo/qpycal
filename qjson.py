@@ -5,7 +5,7 @@ import numpy as np
 
 
 def from_json_gate(json_str):
-    from_json_gate_dic = {"1": "I", "Z^¼": "T", "•": "C"}
+    from_json_gate_dic = {"1": "I", "Z^¼": "T", "•": "C", "Swap": "W"}
     return from_json_gate_dic.get(str(json_str), str(json_str))
 
 
