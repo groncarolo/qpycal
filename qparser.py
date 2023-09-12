@@ -2,22 +2,10 @@ import logging
 
 from ply import yacc
 
-from qgates import apply_gate, Gate, Ctrl, ACtrl, XGate
-from qstates import is_state_normalized, State
-from qunitary import get_unitary_10, get_unitary_01
-from qmath import tensor_prod
+from qsolver import calculate_initial_state, solve_circuit
 from qlexer import tokens
-from functools import reduce
 
-
-def display_circuit(states, gates):
-    for i in reversed(range(len(states))):
-        print(states[i].label, end="")
-        print(" ", end="")
-        for j in reversed(range(len(gates))):
-            print(gates[j][i].label, end="")
-            print(" ", end="")
-        print("")
+from qvisualization import display_circuit
 
 
 def p_circuit(p):
@@ -25,69 +13,9 @@ def p_circuit(p):
     logging.info("p_circuit")
     display_circuit(p[1], p[2])
 
-    if len(p[1]) > 1:
-        state = reduce(lambda x, y: State(tensor_prod(x.state, y.state)), p[1])
-    else:
-        state = p[1][0]
+    initial_state = calculate_initial_state(p[1])
 
-    if not is_state_normalized(state):
-        raise
-    ret = state.state
-    for col in p[2]:
-        logging.info("Multiplying:")
-        logging.info(ret)
-        logging.info("*")
-
-        for g in col:
-            logging.info(g.gate)
-
-        if len(col) > 1:
-            # look for a control
-            ctrls = [i for i, e in enumerate(col) if isinstance(e, Ctrl)]
-            logging.info("ctrls")
-            logging.info(ctrls)
-            actrls = [i for i, e in enumerate(col) if isinstance(e, ACtrl)]
-            logging.info("actrls")
-            logging.info(actrls)
-            nots = [i for i, e in enumerate(col) if isinstance(e, XGate)]
-            logging.info("nots")
-            logging.info(nots)
-
-            if len(ctrls) > 0:
-                # remove from list between indexes
-                if ctrls[0] < nots[0]:
-                    start_index = ctrls[0]
-                    end_index = nots[0] + 1
-                    op = get_unitary_10
-                else:
-                    start_index = nots[0]
-                    end_index = ctrls[0] + 1
-                    op = get_unitary_01
-                del col[start_index:end_index]
-
-                logging.info("now col is:")
-                logging.info(col)
-                # if there is nothing else in the column
-                # this is the final gate
-                g = Gate(op(2 ** (end_index - start_index), XGate.gate))
-                if len(col) == 0:
-                    complete = g
-                else:
-                    # we need to insert the new gate in the correct position
-                    col.insert(start_index, g)
-                    complete = reduce(lambda x, y: Gate(tensor_prod(x.gate, y.gate)), col)
-            else:
-                complete = reduce(lambda x, y: Gate(tensor_prod(x.gate, y.gate)), col)
-        else:
-            # this is one bit case
-            complete = col[0]
-        logging.info(complete.gate)
-
-        ret = apply_gate(complete, ret)
-        logging.info("=")
-        logging.info(ret)
-        logging.info("^^^^^^^^^^^")
-
+    ret = solve_circuit(initial_state, p[2])
     p[0] = ret, len(p[1])
 
 
@@ -202,6 +130,7 @@ def p_gate(p):
            | gate_i
            | gate_c
            | gate_a
+           | gate_swap
     '''
     p[0] = p[1]
     logging.info("p_gate")
