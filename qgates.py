@@ -122,6 +122,8 @@ class SwapPlaceHolder:
     '''
 
     '''
+    gate = None
+    label = "SwapPlaceHolder"
 
 
 class Swap:
