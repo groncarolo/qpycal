@@ -116,3 +116,20 @@ class CNOT01:
 
     def __init__(self, state_shape):
         self.gate = get_unitary_gate_01(state_shape, XGate.gate)
+
+
+class SwapPlaceHolder:
+    '''
+
+    '''
+
+
+class Swap:
+    '''
+    Swap
+    '''
+    label = "SWAP"
+    gate = None
+
+    def __init__(self, state_shape):
+        self.gate = get_generic_swap(state_shape)
