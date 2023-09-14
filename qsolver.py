@@ -1,9 +1,10 @@
 import logging
 from functools import reduce
 
-from qgates import CNOT10, SwapPlaceHolder, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap
+from qgates import CNOT10, SwapPlaceHolder, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity
 from qmath import tensor_prod
 from qstates import State, is_state_normalized
+from qvisualization import display_circuit
 
 
 def calculate_initial_state(states):
@@ -61,10 +62,42 @@ def substitute_swap(col, swaps):
         col.insert(start_index, g)
 
 
-def solve_circuit(state, circuit):
+def substitute_custom_gates(state_shape, circuit):
+    logging.info(str(state_shape))
+    logging.info(circuit)
+
+    for idx_col, col in enumerate(circuit):
+        for idx_gate, gate in enumerate(col):
+            logging.info(gate.is_custom)
+            if gate.is_custom:
+                logging.info(gate.get_len())
+                logging.info(gate.get_height())
+                # if it is custom
+                assert state_shape >= gate.get_height()
+                del circuit[idx_col]
+                logging.info("del " + str(idx_col))
+                for i, new_col in enumerate(gate.gates):
+                    logging.info("insert @ " + str(idx_col + i))
+                    circuit.insert(idx_col + i, [])
+                    for j, new_gate in enumerate(new_col):
+                        logging.info("inserting @ " + str(idx_col + i) + " j " + str(j))
+                        circuit[idx_col + i].insert(idx_gate + j, new_gate)
+                    # if the new column is shorter than the state
+                    for a in range(state_shape - len(new_col)):
+                        circuit[idx_col + i].insert(idx_gate + len(new_col), Identity())
+    logging.info(circuit)
+
+
+def solve_circuit(states, circuit):
+    state = calculate_initial_state(states)
+
     # substitute custom gates with their
     # representation
+    substitute_custom_gates(len(states), circuit)
 
+    display_circuit(states, circuit)
+
+    logging.info(circuit)
     for col in circuit:
         logging.info("Multiplying:")
         logging.info(state)
@@ -99,6 +132,7 @@ def solve_circuit(state, circuit):
 
         complete = reduce(lambda x, y: Gate(tensor_prod(x.gate, y.gate)), col)
 
+        logging.info(complete.gate.shape)
         logging.info(complete.gate)
 
         state = apply_gate(complete, state)

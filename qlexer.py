@@ -1,47 +1,51 @@
 import logging
 
 from ply import lex
-import numpy as np
 
 import qgates
 import qstates
 
+reserved = {
+    'sqrt': 'SQRT',
+}
+
 # List of token names
-tokens = (
-    # 1 qubit states
-    'state_0',
-    'state_1',
-    'state_plus',
-    'state_minus',
-    'state_i',
-    'state_minus_i',
-    # gates one qubit
-    'gate_x',
-    'gate_y',
-    'gate_z',
-    'gate_s',
-    'gate_t',
-    'gate_h',
-    'gate_i',
-    'gate_c',
-    'gate_a',
-    'gate_swap',
-    # digits
-    'number',
-    # operation
-    'plus',
-    'minus',
-    'times',
-    'divide',
-    # parentheses
-    'lparen',
-    'rparen',
-    'lbracket',
-    'rbracket',
-    # math fx
-    'i',
-    'sqrt',
-)
+tokens = [
+             # 1 qubit states
+             'state_0',
+             'state_1',
+             'state_plus',
+             'state_minus',
+             'state_i',
+             'state_minus_i',
+             # gates one qubit
+             'gate_x',
+             'gate_y',
+             'gate_z',
+             'gate_s',
+             'gate_t',
+             'gate_h',
+             'gate_i',
+             'gate_c',
+             'gate_a',
+             'gate_swap',
+             'gate_custom',
+             # digits
+             'number',
+             # operation
+             'plus',
+             'minus',
+             'times',
+             'divide',
+             # parentheses
+             'lparen',
+             'rparen',
+             'lbracket',
+             'rbracket',
+             # math fx
+             'i',
+             'ID',
+         ] + list(reserved.values())
 
 
 def t_state_0(t):
@@ -140,6 +144,11 @@ def t_gate_swap(t):
     return t
 
 
+def t_gate_custom(t):
+    'G'
+    return t
+
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -183,9 +192,9 @@ def t_number(t):
     return t
 
 
-def t_sqrt(t):
-    r'sqrt'
-    t.value = np.sqrt
+def t_ID(t):
+    r'[a-z]+'
+    t.type = reserved.get(t.value, 'ID')  # Check for reserved words
     return t
 
 
@@ -214,6 +223,7 @@ W
 /
 *
 sqrt
+string
 55.0
 (
 )

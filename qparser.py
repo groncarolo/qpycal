@@ -2,34 +2,31 @@ import logging
 
 from ply import yacc
 
-from qsolver import calculate_initial_state, solve_circuit
+from qcustomgate import get_custom_gate
 from qlexer import tokens
+from qsolver import solve_circuit
 
-from qvisualization import display_circuit
+import numpy as np
 
 
 def p_circuit(p):
     '''circuit : states gates'''
     logging.info("p_circuit")
-    display_circuit(p[1], p[2])
-
-    initial_state = calculate_initial_state(p[1])
-
-    ret = solve_circuit(initial_state, p[2])
+    ret = solve_circuit(p[1], p[2])
     p[0] = ret, len(p[1])
 
 
 def p_factor(p):
     '''factor : number
-              | sqrt lparen number rparen
-              | number times sqrt lparen number rparen'''
+              | SQRT lparen number rparen
+              | number times SQRT lparen number rparen'''
     logging.info("p_factor")
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 5:
-        p[0] = p[1](p[3])
+        p[0] = np.sqrt(p[3])
     elif len(p) == 7:
-        p[0] = p[1] * p[3](p[5])
+        p[0] = p[1] * np.sqrt(p[5])
 
 
 def p_opearand(p):
@@ -120,6 +117,11 @@ def p_gates(p):
         p[0] = p[1]
 
 
+def p_custom_gate(p):
+    '''custom_gate : gate_custom lparen ID rparen '''
+    p[0] = get_custom_gate(p[3])
+
+
 def p_gate(p):
     '''gate : gate_x
            | gate_y
@@ -131,10 +133,11 @@ def p_gate(p):
            | gate_c
            | gate_a
            | gate_swap
+           | custom_gate
     '''
     p[0] = p[1]
     logging.info("p_gate")
-    logging.info(p[0].gate)
+    # logging.info(p[0].gate)
 
 
 # Error rule for syntax errors
