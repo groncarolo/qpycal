@@ -22,6 +22,10 @@ tokens = (
     'T',
     'H',
     'I',
+    # gates two qubit
+    'CNOT10',
+    'CNOT01',
+    # digits
     'NUMBER',
     # operation
     'PLUS',
@@ -115,6 +119,17 @@ def t_I(t):
     return t
 
 
+def t_CNOT10(t):
+    'CNOT10'
+    t.value = qgates.CNot10()
+    return t
+
+
+def t_CNOT01(t):
+    'CNOT01'
+    t.value = qgates.CNot01()
+    return t
+
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -180,6 +195,8 @@ Y
 Z
 S
 T
+CNOT10
+CNOT01
 +
 -
 /
