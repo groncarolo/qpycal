@@ -1,5 +1,6 @@
 import numpy as np
 import qutils
+from qunitary import get_unitary_gate_10, get_unitary_gate_01, get_generic_swap
 
 
 class Gate:
@@ -93,3 +94,25 @@ class ACtrl:
     '''
     label = "A"
     gate = np.identity(2)
+
+
+class CNOT10:
+    '''
+    CNOT10
+    '''
+    label = "CNOT10"
+    gate = None
+
+    def __init__(self, state_shape):
+        self.gate = get_unitary_gate_10(state_shape, XGate.gate)
+
+
+class CNOT01:
+    '''
+    CNOT01
+    '''
+    label = "CNOT01"
+    gate = None
+
+    def __init__(self, state_shape):
+        self.gate = get_unitary_gate_01(state_shape, XGate.gate)
