@@ -1,17 +1,27 @@
 import sys
+from functools import reduce
+
 import numpy as np
 
 from qutils import complex_2_polar_coordinates, rad_2_deg
 
 
 def display_circuit(states, gates):
+    max_len = max(len(ele.label) for ele in states)
     for i in reversed(range(len(states))):
-        print(states[i].label, end="")
+        print("{:>{width}}".format(states[i].label, width=max_len), end="")
         print(" ", end="")
         for j in range(len(gates)):
             print(gates[j][i].label, end="")
             print(" ", end="")
         print("")
+    print("{:>{width}}".format("", width=max_len + 1), end="")
+    for i in range(len(gates)):
+        if i == 0:
+            print(str(i), end="")
+        elif (i % 5) == 0:
+            print("{:>{width}}".format(str(i), width=10), end="")
+    print("")
 
 
 def display_result(ret, in_len):

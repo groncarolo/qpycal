@@ -68,11 +68,13 @@ def p_comp_states(p):
                   | factors state
                   | lbracket factors state operand factors state rbracket'''
     logging.info("p_comp_states")
+
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 3:
         s = p[2]
         s.state = s.state * p[1]
+        s.label = str(p[1]) + s.label
         p[0] = s
     elif len(p) == 8:
         s1 = p[3]
@@ -80,6 +82,8 @@ def p_comp_states(p):
         s2 = p[6]
         s2.state = s2.state * p[4] * p[5]
         s1.state = s1.state + s2.state
+        s1.label = str(f"{p[2]:.3f}") + s1.label + str(f"{p[4] * p[5]:.3f}") + s2.label
+
         p[0] = s1
 
 
