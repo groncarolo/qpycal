@@ -152,4 +152,12 @@ parser = yacc.yacc(debug=True, debuglog=log)
 
 
 def parse_and_calculate(data):
-    return parser.parse(data, debug=log)
+    ret, len = parser.parse(data, debug=log)
+    if (len % 2) == 0:
+        a = int(np.sqrt(ret.shape[0]))
+        b = int(np.sqrt(ret.shape[0]))
+    else:
+        b = int(np.sqrt(ret.shape[0] * 2))
+        a = b // 2
+
+    return ret.reshape(b, a)

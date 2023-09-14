@@ -16,8 +16,8 @@ testdata_calculate = [
 
 @pytest.mark.parametrize("in_str,r_ph_th, xyz", testdata_calculate)
 def test_calculate(in_str, r_ph_th, xyz):
-    result, in_len = parse_and_calculate(in_str)
-    ret_r_ph_th = complex_2_spherical_coordinates(result)
-    ret_xyz = complex_2_cartesian_coordinates(result)
+    result = parse_and_calculate(in_str)
+    ret_r_ph_th = complex_2_spherical_coordinates(result.flatten())
+    ret_xyz = complex_2_cartesian_coordinates(result.flatten())
     assert np.allclose(ret_r_ph_th, r_ph_th)
     assert np.allclose(ret_xyz, xyz)

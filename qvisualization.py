@@ -24,12 +24,4 @@ def display_result(ret, in_len):
     else:
         np.set_printoptions(linewidth=sys.maxsize)
         np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
-
-        if (in_len % 2) == 0:
-            a = int(np.sqrt(ret.shape[0]))
-            b = int(np.sqrt(ret.shape[0]))
-        else:
-            b = int(np.sqrt(ret.shape[0] * 2))
-            a = b // 2
-
-        print(ret.reshape(b, a))
+        print(ret)
