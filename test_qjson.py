@@ -12,12 +12,12 @@ def test_from_json():
         if os.path.isfile(f):
             with open(f, 'r') as file:
                 data = file.read().replace('\n', '')
-                print ("")
-                print (f)
-                print (data)
+                print("")
+                print(f)
+                print(data)
                 circuit, result = from_json(data)
-                print (circuit)
+                print(circuit)
                 print(result)
 
-                my_result,in_len = parse_and_calculate(circuit)
+                my_result, in_len = parse_and_calculate(circuit)
                 assert np.allclose(result, my_result)
