@@ -5,8 +5,14 @@ import qutils
 class Gate:
     gate = None
 
+    def __init__(self, g):
+        self.gate = g
 
-def apply(g, s):
+
+def apply_gate(g, s):
+    '''takes a gate g and a state n
+    performs the dot product
+    and eventually removes aa global phase'''
     r = np.dot(g.gate, s)
     return qutils.remove_global_phase(r)
 
