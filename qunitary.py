@@ -5,7 +5,7 @@ import numpy as np
 # i control j target
 # U
 # X
-def get_unitary_01(state_shape, gate):
+def get_unitary_gate_01(state_shape, gate):
     zero = np.array([1., 0.])
     one = np.array([0., 1.])
     ide2 = np.identity(2)
@@ -21,7 +21,7 @@ def get_unitary_01(state_shape, gate):
 # i control j target
 # U
 # C
-def get_unitary_10(state_shape, gate):
+def get_unitary_gate_10(state_shape, gate):
     zero = np.array([1., 0.])
     one = np.array([0., 1.])
     ide2 = np.identity(2)
