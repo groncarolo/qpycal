@@ -4,6 +4,9 @@ import numpy as np
 class State:
     state = None
 
+    def __init__(self, s):
+        self.state = s
+
 
 def is_normalized(state):
     r = np.conjugate(state.state)
@@ -36,5 +39,3 @@ class StateI:
 class StateMinusI:
     label = "|-i>"
     state = np.array([1. / np.sqrt(2.), -1.j / np.sqrt(2.)])
-
-
