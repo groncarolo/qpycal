@@ -2,7 +2,7 @@ import sys
 import numpy as np
 
 from qutils import complex_2_spherical_coordinates, complex_2_cartesian_coordinates, print_spherical_coordinates, \
-    print_cartesian_coordinates
+    print_cartesian_coordinates, complex_2_polar_coordinates
 
 
 def display_circuit(states, gates):
