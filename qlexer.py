@@ -1,6 +1,6 @@
 import logging
 
-import ply.lex as lex
+from ply import lex
 import numpy as np
 
 import qgates
@@ -16,31 +16,30 @@ tokens = (
     'state_i',
     'state_minus_i',
     # gates one qubit
-    'X',
-    'Y',
-    'Z',
-    'S',
-    'T',
-    'H',
-    'I',
-    # gates two qubit
-    'C',
-    'A',
+    'gate_x',
+    'gate_y',
+    'gate_z',
+    'gate_s',
+    'gate_t',
+    'gate_h',
+    'gate_i',
+    'gate_c',
+    'gate_a',
     # digits
-    'NUMBER',
+    'number',
     # operation
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
+    'plus',
+    'minus',
+    'times',
+    'divide',
     # parentheses
-    'LPAREN',
-    'RPAREN',
-    'LBRACKET',
-    'RBRACKET',
+    'lparen',
+    'rparen',
+    'lbracket',
+    'rbracket',
     # math fx
     'i',
-    'SQRT',
+    'sqrt',
 )
 
 
@@ -80,55 +79,55 @@ def t_state_minus_i(t):
     return t
 
 
-def t_X(t):
+def t_gate_x(t):
     'X'
     t.value = qgates.XGate()
     return t
 
 
-def t_Y(t):
+def t_gate_y(t):
     'Y'
     t.value = qgates.YGate()
     return t
 
 
-def t_Z(t):
+def t_gate_z(t):
     'Z'
     t.value = qgates.ZGate()
     return t
 
 
-def t_S(t):
+def t_gate_s(t):
     'S'
     t.value = qgates.SGate()
     return t
 
 
-def t_T(t):
+def t_gate_t(t):
     'T'
     t.value = qgates.TGate()
     return t
 
 
-def t_H(t):
+def t_gate_h(t):
     'H'
     t.value = qgates.HGate()
     return t
 
 
-def t_I(t):
+def t_gate_i(t):
     'I'
     t.value = qgates.Identity()
     return t
 
 
-def t_C(t):
+def t_gate_c(t):
     'C'
     t.value = qgates.Ctrl()
     return t
 
 
-def t_A(t):
+def t_gate_a(t):
     'A'
     t.value = qgates.ACtrl()
     return t
@@ -151,33 +150,33 @@ def t_error(t):
 
 
 t_i = 'i'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_LBRACKET = r'\['
-t_RBRACKET = r'\]'
+t_times = r'\*'
+t_divide = r'/'
+t_lparen = r'\('
+t_rparen = r'\)'
+t_lbracket = r'\['
+t_rbracket = r'\]'
 
 
-def t_PLUS(t):
+def t_plus(t):
     r'\+'
     t.value = float(1.)
     return t
 
 
-def t_MINUS(t):
+def t_minus(t):
     r'\-'
     t.value = float(-1.)
     return t
 
 
-def t_NUMBER(t):
+def t_number(t):
     r'\d+.\d+'
     t.value = float(t.value)
     return t
 
 
-def t_SQRT(t):
+def t_sqrt(t):
     r'sqrt'
     t.value = np.sqrt
     return t

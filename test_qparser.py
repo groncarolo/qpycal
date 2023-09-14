@@ -1,7 +1,8 @@
 import pytest
+import numpy as np
 
 from qparser import parse_and_calculate
-from qutils import *
+from qutils import complex_2_spherical_coordinates, complex_2_cartesian_coordinates
 
 testdata_calculate = [
     #                       [r, ph, th],             [x,y,z]
@@ -15,7 +16,7 @@ testdata_calculate = [
 
 @pytest.mark.parametrize("in_str,r_ph_th, xyz", testdata_calculate)
 def test_calculate(in_str, r_ph_th, xyz):
-    result,in_len = parse_and_calculate(in_str)
+    result, in_len = parse_and_calculate(in_str)
     ret_r_ph_th = complex_2_spherical_coordinates(result)
     ret_xyz = complex_2_cartesian_coordinates(result)
     assert np.allclose(ret_r_ph_th, r_ph_th)
