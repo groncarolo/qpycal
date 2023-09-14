@@ -9,7 +9,7 @@ def display_circuit(states, gates):
     for i in reversed(range(len(states))):
         print(states[i].label, end="")
         print(" ", end="")
-        for j in reversed(range(len(gates))):
+        for j in range(len(gates)):
             print(gates[j][i].label, end="")
             print(" ", end="")
         print("")
@@ -25,7 +25,6 @@ def display_result(ret, in_len):
         np.set_printoptions(linewidth=sys.maxsize)
         np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
-        print(ret.shape[0])
         if (in_len % 2) == 0:
             a = int(np.sqrt(ret.shape[0]))
             b = int(np.sqrt(ret.shape[0]))
