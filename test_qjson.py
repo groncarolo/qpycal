@@ -19,5 +19,5 @@ def test_from_json():
                 print (circuit)
                 print(result)
 
-                my_result = parse_and_calculate(circuit)
+                my_result,in_len = parse_and_calculate(circuit)
                 assert np.allclose(result, my_result)
