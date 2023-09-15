@@ -1,7 +1,8 @@
 import logging
 from functools import reduce
 
-from qgates import CNOT10, SwapPlaceHolder, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity
+from qgates import CNOT10, SwapPlaceHolder, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
+    ACNOT01
 from qmath import tensor_prod
 from qstates import State, is_state_normalized
 from qvisualization import display_circuit
@@ -40,6 +41,20 @@ def substitute_cnot(col, ctrls, actrls, nots):
         # clean all the gates that are in between
         del col[start_index:end_index]
         g = cnot(2 ** (end_index - start_index))
+        col.insert(start_index, g)
+    if len(actrls) == 1 and len(nots) == 1:
+        # get the order of the gate
+        if actrls[0] < nots[0]:
+            start_index = actrls[0]
+            end_index = nots[0] + 1
+            acnot = ACNOT10
+        else:
+            start_index = nots[0]
+            end_index = actrls[0] + 1
+            acnot = ACNOT01
+        # clean all the gates that are in between
+        del col[start_index:end_index]
+        g = acnot(2 ** (end_index - start_index))
         col.insert(start_index, g)
 
 
