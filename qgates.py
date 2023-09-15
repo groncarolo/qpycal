@@ -1,6 +1,6 @@
 import numpy as np
 import qutils
-from qunitary import get_unitary_gate_10, get_unitary_gate_01, get_generic_swap
+from qunitary import get_unitary_gate_10, get_unitary_gate_01, get_generic_swap, get_cnot_actrl_10, get_cnot_actrl_01
 
 
 class Gate:
@@ -143,6 +143,26 @@ class CNOT01(Gate):
     def __init__(self, state_shape):
         self.gate = get_unitary_gate_01(state_shape, XGate.gate)
         self.label = "CNOT01"
+
+
+class ACNOT10(Gate):
+    '''
+    ACNOT10
+    '''
+
+    def __init__(self, state_shape):
+        self.gate = get_cnot_actrl_10(state_shape)
+        self.label = "ACNOT10"
+
+
+class ACNOT01(Gate):
+    '''
+    ACNOT01
+    '''
+
+    def __init__(self, state_shape):
+        self.gate = get_cnot_actrl_01(state_shape)
+        self.label = "ACNOT01"
 
 
 class SwapPlaceHolder(Gate):
