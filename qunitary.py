@@ -3,8 +3,8 @@ import numpy as np
 
 
 # i control j target
+# C
 # U
-# X
 def get_unitary_gate_01(state_shape, gate):
     zero = np.array([1., 0.])
     one = np.array([0., 1.])
@@ -34,6 +34,43 @@ def get_unitary_gate_10(state_shape, gate):
     logging.info(b.shape)
     result_gate = a + b
     return result_gate
+
+
+def get_cnot_actrl_10(state_shape):
+    zero = np.array([1., 0.])
+    one = np.array([0., 1.])
+    ide2 = np.identity(2)
+    idex = np.identity(state_shape // 4)
+
+    E00 = np.outer(zero, np.conjugate(zero).T)
+    E11 = np.outer(one, np.conjugate(one).T)
+
+    gnot = np.array([[0., 1.], [1., 0.]])  # not
+
+    a = np.kron(E00, np.kron(idex, gnot))
+    b = np.kron(E11, np.kron(idex, ide2))
+
+    return a + b
+
+
+# cnot ij i control j target
+# A
+# X
+def get_cnot_actrl_01(state_shape):
+    zero = np.array([1., 0.])
+    one = np.array([0., 1.])
+    ide2 = np.identity(state_shape // 2)
+    idex = np.identity(state_shape // 4)
+
+    E00 = np.outer(zero, np.conjugate(zero).T)
+    E01 = np.outer(zero, np.conjugate(one).T)
+    E10 = np.outer(one, np.conjugate(zero).T)
+    E11 = np.outer(one, np.conjugate(one).T)
+
+    a = np.kron(ide2, E11)
+    b = np.kron(np.kron(E10, idex), E00)
+    c = np.kron(np.kron(E01, idex), E00)
+    return a + b + c
 
 
 # SWAP1,3=|0⟩⟨0|⊗I⊗|0⟩⟨0|+E01⊗I⊗E10+E10⊗I⊗E01+|1⟩⟨1|⊗I⊗|1⟩⟨1|
