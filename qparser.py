@@ -64,9 +64,12 @@ def p_states(p):
 
 
 def p_comp_states(p):
-    '''comp_state : state
+    '''comp_state : named_state
                   | factors state
-                  | lbracket factors state operand factors state rbracket'''
+                  | ID factors state
+                  | lbracket factors state operand factors state rbracket
+                  | ID lbracket factors state operand factors state rbracket
+                  '''
     logging.info("p_comp_states")
 
     if len(p) == 2:
@@ -76,6 +79,13 @@ def p_comp_states(p):
         s.state = s.state * p[1]
         s.label = str(p[1]) + s.label
         p[0] = s
+    elif len(p) == 4:
+        s = p[3]
+        s.state = s.state * p[2]
+        s.label = str(p[2]) + s.label
+        s.name = p[1]
+        p[0] = s
+
     elif len(p) == 8:
         s1 = p[3]
         s1.state = s1.state * p[2]
@@ -85,6 +95,28 @@ def p_comp_states(p):
         s1.label = str(f"{p[2]:.3f}") + s1.label + str(f"{p[4] * p[5]:.3f}") + s2.label
 
         p[0] = s1
+    elif len(p) == 9:
+        s1 = p[4]
+        s1.state = s1.state * p[3]
+        s2 = p[7]
+        s2.state = s2.state * p[5] * p[6]
+        s1.state = s1.state + s2.state
+        s1.label = str(f"{p[3]:.3f}") + s1.label + str(f"{p[5] * p[6]:.3f}") + s2.label
+
+        s1.name = p[1]
+        p[0] = s1
+
+
+def p_named_state(p):
+    '''named_state : ID state
+    | state'''
+    if len(p) == 3:
+        p[0] = p[2]
+        p[0].name = p[1]
+    else:
+        p[0] = p[1]
+
+    # logging.info("state " + str(p[0].state))
 
 
 def p_state(p):
