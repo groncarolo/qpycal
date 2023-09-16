@@ -6,15 +6,18 @@ from qutils import complex_2_polar_coordinates, rad_2_deg
 
 
 def display_circuit(states, gates):
-    max_len = max(len(ele.label) for ele in states)
+    max_len_label = max(len(ele.label) for ele in states)
+    max_len_name = max(len(ele.name) for ele in states)
     for i in reversed(range(len(states))):
-        print("{:>{width}}".format(states[i].label, width=max_len), end="")
+        print("{:>{width}}".format(states[i].name, width=max_len_name), end="")
+        print(" ", end="")
+        print("{:>{width}}".format(states[i].label, width=max_len_label), end="")
         print(" ", end="")
         for j in range(len(gates)):
             print(gates[j][i].label, end="")
             print(" ", end="")
         print("")
-    print("{:>{width}}".format("", width=max_len + 1), end="")
+    print("{:>{width}}".format("", width=max_len_name + max_len_label + 2), end="")
     for i in range(len(gates)):
         if i == 0:
             print(str(i), end="")
