@@ -1,5 +1,4 @@
 import logging
-
 from QConsole import QConsole
 
 
