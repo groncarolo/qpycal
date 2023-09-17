@@ -112,14 +112,10 @@ def solve_circuit(states, circuit):
 
     display_circuit(states, circuit)
 
-    logging.info(circuit)
-    for col in circuit:
-        logging.info("Multiplying:")
-        logging.info(state)
-        logging.info("*")
-
-        for g in col:
-            logging.info(g.gate)
+    for idx_col, col in enumerate(circuit):
+        logging.warning("Column {0}".format(idx_col))
+        logging.warning(state)
+        logging.warning("*")
 
         # look for controls
         ctrls = [i for i, e in enumerate(col) if isinstance(e, Ctrl)]
@@ -147,11 +143,9 @@ def solve_circuit(states, circuit):
 
         complete = reduce(lambda x, y: Gate(tensor_prod(x.gate, y.gate)), col)
 
-        logging.info(complete.gate.shape)
-        logging.info(complete.gate)
+        logging.warning(complete.gate)
 
         state = apply_gate(complete, state)
-        logging.info("=")
-        logging.info(state)
-        logging.info("^^^^^^^^^^^")
+        logging.warning("=")
+        logging.warning(state)
     return state

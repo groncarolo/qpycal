@@ -1,4 +1,3 @@
-import logging
 import numpy as np
 
 
@@ -28,10 +27,8 @@ def get_unitary_gate_10(state_shape, gate):
     iden = np.identity(state_shape // 4)
     out = np.outer(zero, np.conjugate(zero).T)
     a = np.kron(np.kron(out, ide2), iden)
-    logging.info(a.shape)
     out2 = np.outer(one, np.conjugate(one).T)
     b = np.kron(np.kron(out2, iden), gate)
-    logging.info(b.shape)
     result_gate = a + b
     return result_gate
 

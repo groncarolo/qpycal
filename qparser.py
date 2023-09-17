@@ -11,7 +11,6 @@ import numpy as np
 
 def p_circuit(p):
     '''circuit : states gates'''
-    logging.info("p_circuit")
     ret = solve_circuit(p[1], p[2])
     p[0] = ret, len(p[1])
 
@@ -20,7 +19,6 @@ def p_factor(p):
     '''factor : number
               | SQRT lparen number rparen
               | number times SQRT lparen number rparen'''
-    logging.info("p_factor")
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 5:
@@ -32,7 +30,6 @@ def p_factor(p):
 def p_opearand(p):
     '''operand : minus
                | plus'''
-    logging.info("p_operand")
     p[0] = 1.0 * p[1]
 
 
@@ -41,7 +38,6 @@ def p_factors(p):
                | factor divide factor
                | lparen factor operand i times factor rparen divide factor'''
 
-    logging.info("p_factors")
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 4:
@@ -53,12 +49,9 @@ def p_factors(p):
 def p_states(p):
     '''states : states times comp_state
     | comp_state'''
-    logging.info("p_states")
     if len(p) == 2:
-        logging.info(">>len 2")
         p[0] = [p[1]]
     elif len(p) == 4:
-        logging.info(">>len 4")
         p[1].append(p[3])
         p[0] = p[1]
 
@@ -70,7 +63,6 @@ def p_comp_states(p):
                   | lbracket factors state operand factors state rbracket
                   | ID lbracket factors state operand factors state rbracket
                   '''
-    logging.info("p_comp_states")
 
     if len(p) == 2:
         p[0] = p[1]
@@ -116,8 +108,6 @@ def p_named_state(p):
     else:
         p[0] = p[1]
 
-    # logging.info("state " + str(p[0].state))
-
 
 def p_state(p):
     '''state : state_0
@@ -126,28 +116,22 @@ def p_state(p):
     | state_minus
     | state_i
     | state_minus_i'''
-    # logging.info("p_state")
     p[0] = p[1]
-    # logging.info("state " + str(p[0].state))
 
 
 def p_gates(p):
     r'''gates : gates gate
               | gates times gate
               | gate'''
-    logging.info("p_gates")
 
     if len(p) == 2:
-        logging.info("p_gates: first gate")
         # create a list
         p[0] = [[p[1]]]
     elif len(p) == 4:
-        logging.info("p_gates: len4")
         last = p[1][len(p[1]) - 1]
         last.append(p[3])
         p[0] = p[1]
     else:
-        logging.info("p_gates: append")
         last = p[1]
         last.append([p[2]])
         p[0] = p[1]
@@ -172,8 +156,6 @@ def p_gate(p):
            | custom_gate
     '''
     p[0] = p[1]
-    logging.info("p_gate")
-    # logging.info(p[0].gate)
 
 
 # Error rule for syntax errors
@@ -187,5 +169,5 @@ log = logging.getLogger()
 parser = yacc.yacc(debug=True, debuglog=log)
 
 
-def parse_and_calculate(data):
+def parse_and_calculate(data, debug=False):
     return parser.parse(data, debug=log)
