@@ -1,4 +1,5 @@
 import cmd
+import logging
 import os.path
 
 from qjson import from_json
@@ -27,14 +28,24 @@ class QConsole(cmd.Cmd):
             readline.set_history_length(history_file_size)
             readline.write_history_file(history_file)
 
-    def do_sim(self, arg):
-        ret, in_len = parse_and_calculate(arg)
-        display_result(ret, in_len)
-
     def do_simjson(self, arg):
         circuit, result = from_json(arg)
         ret, in_len = parse_and_calculate(circuit)
         display_result(ret, in_len)
+
+    def do_sim(self, arg):
+        ret, in_len = parse_and_calculate(arg)
+        display_result(ret, in_len)
+
+    def do_debug(self, arg):
+        rootLogger = logging.getLogger()
+        logFormatter = logging.Formatter("%(message)s")
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(logFormatter)
+        consoleHandler.setLevel(logging.WARNING)
+        rootLogger.addHandler(consoleHandler)
+        self.do_sim(arg)
+        rootLogger.removeHandler(consoleHandler)
 
     def do_help(self, arg):
         print("try sim |0> X")
