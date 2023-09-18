@@ -33,7 +33,7 @@ class QConsole(cmd.Cmd):
         ret, in_len = parse_and_calculate(circuit)
         display_result(ret, in_len)
 
-    def do_sim(self, arg):
+    def do_solve(self, arg):
         ret, in_len = parse_and_calculate(arg)
         display_result(ret, in_len)
 
@@ -44,11 +44,16 @@ class QConsole(cmd.Cmd):
         consoleHandler.setFormatter(logFormatter)
         consoleHandler.setLevel(logging.WARNING)
         rootLogger.addHandler(consoleHandler)
-        self.do_sim(arg)
+        self.do_solve(arg)
         rootLogger.removeHandler(consoleHandler)
 
     def do_help(self, arg):
-        print("try sim |0> X")
+        print("try typing")
+        print("solve a circuit:")
+        print("solve |0> X")
+        print("")
+        print("solve a circuit with comple liner algebra intermediary results:")
+        print("debug |0> X")
 
     def do_EOF(self, args):
         return True
