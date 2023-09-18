@@ -170,7 +170,7 @@ class SwapPlaceHolder(Gate):
 
     '''
     gate = None
-    label = "SwapPlaceHolder"
+    label = "W"
 
     def __init__(self):
         pass
