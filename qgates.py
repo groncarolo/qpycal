@@ -59,6 +59,17 @@ class ZGate(Gate):
         pass
 
 
+class GenericZGate(Gate):
+    '''
+    Generic Rotation
+    '''
+    label = "R"
+    gate = None
+
+    def __init__(self, tetha):
+        self.gate = np.array([[1., 0.], [0., np.exp(1.j * tetha)]])
+
+
 class SGate(Gate):
     '''
     S Gate S^2 = Z
