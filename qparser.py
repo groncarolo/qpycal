@@ -3,6 +3,7 @@ import logging
 from ply import yacc
 
 from qcustomgate import get_custom_gate
+from qgates import GenericZGate
 from qlexer import tokens
 from qsolver import solve_circuit
 
@@ -142,10 +143,20 @@ def p_custom_gate(p):
     p[0] = get_custom_gate(p[3])
 
 
+def p_pi_factor(p):
+    '''pi_factor : lparen PI rparen
+                 | lparen PI divide number rparen'''
+    if len(p) == 4:
+        p[0] = np.pi
+    else:
+        p[0] = np.pi / p[4]
+
+
 def p_gate(p):
     '''gate : gate_x
            | gate_y
            | gate_z
+           | gate_z pi_factor
            | gate_s
            | gate_t
            | gate_h
@@ -155,7 +166,10 @@ def p_gate(p):
            | gate_swap
            | custom_gate
     '''
-    p[0] = p[1]
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = GenericZGate(p[2])
 
 
 # Error rule for syntax errors

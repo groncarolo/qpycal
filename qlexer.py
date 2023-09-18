@@ -7,6 +7,7 @@ import qstates
 
 reserved = {
     'sqrt': 'SQRT',
+    'pi': 'PI',
 }
 
 # List of token names
@@ -223,6 +224,7 @@ W
 /
 *
 sqrt
+pi
 string
 55.0
 (

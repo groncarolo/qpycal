@@ -67,6 +67,14 @@ qpycal> solve |i> Z
  [0.        -0.70710678j]]
 ```
 
+### Z Generic Gate
+Z: Z Pauli Gate rotation of \theta deg on Z axis
+
+```python
+qpycal> solve |+> Z(pi/2.0)
+[[0.70710678+0.j        ]
+ [0.        -0.70710678j]]
+```
 
 ### S Gate
 S: Phase Gate rotation of 90 deg on Z axis
@@ -82,9 +90,18 @@ qpycal> solve |i> S
 T: T Gate rotation of \pi/8 deg on Z axis
 
 ```python
-qpycal> solve |i> T
-[[ 0.70710678+0.j ]
- [-0.5       +0.5j]]
+qpycal> solve |+> Z(pi/4.0)
+ |+> R
+     0
+values:
+[[0.70710678+0.j ]
+ [0.5       +0.5j]]
+mag^2:
+[[0.500]
+ [0.500]]
+phase:
+[[0.000]
+ [45.000]]
 ```
 
 
