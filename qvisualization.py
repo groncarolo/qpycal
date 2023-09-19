@@ -6,6 +6,12 @@ from qutils import complex_2_polar_coordinates, rad_2_deg
 
 
 def display_circuit(states, gates):
+    '''
+    display a circuit in columns
+    :param states: initial states
+    :param gates: gates
+    :return:
+    '''
     max_len_label = max(len(ele.label) for ele in states)
     max_len_name = max(len(ele.name) for ele in states)
     for i in reversed(range(len(states))):
@@ -27,6 +33,12 @@ def display_circuit(states, gates):
 
 
 def display_result(ret, in_len):
+    '''
+    display results: values, magnitudes and phases
+    :param ret: result
+    :param in_len: len of result
+    :return:
+    '''
     np.set_printoptions(linewidth=sys.maxsize)
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 

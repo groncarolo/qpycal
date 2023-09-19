@@ -141,7 +141,7 @@ def t_gate_a(t):
 
 def t_gate_swap(t):
     'W'
-    t.value = qgates.SwapPlaceHolder()
+    t.value = qgates.Swap()
     return t
 
 
