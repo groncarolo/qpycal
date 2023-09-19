@@ -1,13 +1,20 @@
 import numpy as np
 
+from qstates import State0, State1
+
+zero = State0.state
+one = State1.state
+E00 = np.outer(zero, np.conjugate(zero).T)
+E01 = np.outer(zero, np.conjugate(one).T)
+E10 = np.outer(one, np.conjugate(zero).T)
+E11 = np.outer(one, np.conjugate(one).T)
+ide2 = np.identity(2)
+
 
 # i control j target
 # C
 # U
 def get_unitary_gate_01(state_shape, gate):
-    zero = np.array([1., 0.])
-    one = np.array([0., 1.])
-    ide2 = np.identity(2)
     iden = np.identity(state_shape // 4)
     out = np.outer(zero, np.conjugate(zero).T)
     a = np.kron(np.kron(ide2, iden), out)
@@ -21,26 +28,17 @@ def get_unitary_gate_01(state_shape, gate):
 # U
 # C
 def get_unitary_gate_10(state_shape, gate):
-    zero = np.array([1., 0.])
-    one = np.array([0., 1.])
-    ide2 = np.identity(2)
-    iden = np.identity(state_shape // 4)
+    idex = np.identity(state_shape // 4)
     out = np.outer(zero, np.conjugate(zero).T)
-    a = np.kron(np.kron(out, ide2), iden)
+    a = np.kron(np.kron(out, ide2), idex)
     out2 = np.outer(one, np.conjugate(one).T)
-    b = np.kron(np.kron(out2, iden), gate)
+    b = np.kron(np.kron(out2, idex), gate)
     result_gate = a + b
     return result_gate
 
 
 def get_cnot_actrl_10(state_shape):
-    zero = np.array([1., 0.])
-    one = np.array([0., 1.])
-    ide2 = np.identity(2)
     idex = np.identity(state_shape // 4)
-
-    E00 = np.outer(zero, np.conjugate(zero).T)
-    E11 = np.outer(one, np.conjugate(one).T)
 
     gnot = np.array([[0., 1.], [1., 0.]])  # not
 
@@ -54,17 +52,10 @@ def get_cnot_actrl_10(state_shape):
 # A
 # X
 def get_cnot_actrl_01(state_shape):
-    zero = np.array([1., 0.])
-    one = np.array([0., 1.])
-    ide2 = np.identity(state_shape // 2)
+    iden = np.identity(state_shape // 2)
     idex = np.identity(state_shape // 4)
 
-    E00 = np.outer(zero, np.conjugate(zero).T)
-    E01 = np.outer(zero, np.conjugate(one).T)
-    E10 = np.outer(one, np.conjugate(zero).T)
-    E11 = np.outer(one, np.conjugate(one).T)
-
-    a = np.kron(ide2, E11)
+    a = np.kron(iden, E11)
     b = np.kron(np.kron(E10, idex), E00)
     c = np.kron(np.kron(E01, idex), E00)
     return a + b + c
@@ -72,16 +63,12 @@ def get_cnot_actrl_01(state_shape):
 
 # SWAP1,3=|0⟩⟨0|⊗I⊗|0⟩⟨0|+E01⊗I⊗E10+E10⊗I⊗E01+|1⟩⟨1|⊗I⊗|1⟩⟨1|
 def get_generic_swap(state_shape):
-    zero = np.array([1., 0.])
-    one = np.array([0., 1.])
-    ide2 = np.identity(state_shape // 4)  # needs correct number!
+    idex = np.identity(state_shape // 4)  # needs correct number!
     out0 = np.outer(zero, np.conjugate(zero).T)
-    a = np.kron(np.kron(out0, ide2), out0)
-    E01 = np.outer(zero, np.conjugate(one).T)
-    E10 = np.outer(one, np.conjugate(zero).T)
-    b = np.kron(np.kron(E01, ide2), E10)
-    c = np.kron(np.kron(E10, ide2), E01)
+    a = np.kron(np.kron(out0, idex), out0)
+    b = np.kron(np.kron(E01, idex), E10)
+    c = np.kron(np.kron(E10, idex), E01)
     out3 = np.outer(one, np.conjugate(one).T)
-    d = np.kron(np.kron(out3, ide2), out3)
+    d = np.kron(np.kron(out3, idex), out3)
     r = a + b + c + d
     return r

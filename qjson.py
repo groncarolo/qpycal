@@ -4,12 +4,23 @@ import logging
 import numpy as np
 
 
-def from_json_gate(json_str):
+def from_json_to_gate(json_str):
+    '''
+    translate json (quirk) to qpycalc language
+    :param json_str: quirk name
+    :return: qpycalc name
+    '''
+
     from_json_gate_dic = {"1": "I", "Z^¼": "T", "•": "C", "Swap": "W"}
     return from_json_gate_dic.get(str(json_str), str(json_str))
 
 
 def from_json(jstr):
+    '''
+    translate quirk circuit to qpycalc one
+    :param jstr:
+    :return:
+    '''
     j = json.loads(jstr)
 
     how_many_states = len(j["circuit"]["init"])
@@ -25,7 +36,7 @@ def from_json(jstr):
         for i in range(how_many_states - len(c)):
             circuit = circuit + "I*"
         for g in reversed(c):
-            circuit = circuit + from_json_gate(g) + "*"
+            circuit = circuit + from_json_to_gate(g) + "*"
         circuit = circuit[:-1]
 
     logging.info(circuit)

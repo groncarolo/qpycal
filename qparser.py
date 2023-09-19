@@ -183,5 +183,5 @@ log = logging.getLogger()
 parser = yacc.yacc(debug=True, debuglog=log)
 
 
-def parse_and_calculate(data, debug=False):
+def parse_and_solve(data, debug=False):
     return parser.parse(data, debug=log)

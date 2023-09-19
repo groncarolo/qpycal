@@ -1,16 +1,17 @@
 import logging
 from functools import reduce
 
-from qgates import CNOT10, SwapPlaceHolder, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
+import numpy as np
+
+from qgates import CNOT10, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
     ACNOT01
-from qmath import tensor_prod
 from qstates import State, is_state_normalized
 from qvisualization import display_circuit
 
 
 def calculate_initial_state(states):
     if len(states) > 1:
-        state = reduce(lambda x, y: State(tensor_prod(x.state, y.state)), states)
+        state = reduce(lambda x, y: State(np.kron(x.state, y.state)), states)
     else:
         state = states[0]
 
@@ -133,7 +134,7 @@ def solve_circuit(states, circuit):
         logging.info(nots)
 
         # look for swaps
-        swaps = [i for i, e in enumerate(col) if isinstance(e, SwapPlaceHolder)]
+        swaps = [i for i, e in enumerate(col) if isinstance(e, Swap)]
         logging.info("swaps")
         logging.info(swaps)
 
@@ -141,7 +142,7 @@ def solve_circuit(states, circuit):
         substitute_toffoli(col, ctrls, actrls, nots)
         substitute_swap(col, swaps)
 
-        complete = reduce(lambda x, y: Gate(tensor_prod(x.gate, y.gate)), col)
+        complete = reduce(lambda x, y: Gate(np.kron(x.gate, y.gate)), col)
 
         logging.warning(complete.gate)
 
