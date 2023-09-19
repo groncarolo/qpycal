@@ -176,22 +176,13 @@ class ACNOT01(Gate):
         self.label = "ACNOT01"
 
 
-class SwapPlaceHolder(Gate):
-    '''
-
-    '''
-    gate = None
-    label = "W"
-
-    def __init__(self):
-        pass
-
-
 class Swap(Gate):
     '''
-    Swap
+    Swap gate
     '''
+    label = "W"
 
-    def __init__(self, state_shape):
-        self.gate = get_generic_swap(state_shape)
-        self.label = "SWAP"
+    def __init__(self, state_shape=-1):
+        if state_shape != -1:
+            self.gate = get_generic_swap(state_shape)
+            self.label = "SWAP"

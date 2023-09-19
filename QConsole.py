@@ -3,7 +3,7 @@ import logging
 import os.path
 
 from qjson import from_json
-from qparser import parse_and_calculate
+from qparser import parse_and_solve
 from qvisualization import display_result
 
 try:
@@ -20,24 +20,47 @@ class QConsole(cmd.Cmd):
     prompt = 'qpycal> '
 
     def preloop(self):
+        '''
+        if readline is enabled read history
+        :return:
+        '''
         if readline and os.path.exists(history_file):
             readline.read_history_file(history_file)
 
     def postloop(self):
+        '''
+        if readline is enabled save history
+        :return:
+        '''
         if readline:
             readline.set_history_length(history_file_size)
             readline.write_history_file(history_file)
 
-    def do_simjson(self, arg):
+    def do_solvejson(self, arg):
+        '''
+        solve json defined circuit
+        :param arg: json circuit
+        :return:
+        '''
         circuit, result = from_json(arg)
-        ret, in_len = parse_and_calculate(circuit)
+        ret, in_len = parse_and_solve(circuit)
         display_result(ret, in_len)
 
     def do_solve(self, arg):
-        ret, in_len = parse_and_calculate(arg)
+        '''
+        solve circuit
+        :param arg: circuit
+        :return:
+        '''
+        ret, in_len = parse_and_solve(arg)
         display_result(ret, in_len)
 
     def do_debug(self, arg):
+        '''
+        solve circuit showing all operations
+        :param arg:
+        :return:
+        '''
         rootLogger = logging.getLogger()
         logFormatter = logging.Formatter("%(message)s")
         consoleHandler = logging.StreamHandler()
@@ -48,6 +71,11 @@ class QConsole(cmd.Cmd):
         rootLogger.removeHandler(consoleHandler)
 
     def do_help(self, arg):
+        '''
+        print help
+        :param arg:
+        :return:
+        '''
         print("try typing")
         print("solve a circuit:")
         print("solve |0> X")
