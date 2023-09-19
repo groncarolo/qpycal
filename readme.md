@@ -67,6 +67,24 @@ qpycal> solve |i> Z
  [0.        -0.70710678j]]
 ```
 
+### H Gate
+H: H Hadamard gate
+
+```python
+qpycal> solve |0> H
+values:
+[[0.707]
+ [0.707]]
+mag^2:
+[[0.500]
+ [0.500]]
+phase:
+[[0.000]
+ [0.000]]
+```
+
+
+
 ### Z Generic Gate
 Z: Z Pauli Gate rotation of \theta deg on Z axis
 
