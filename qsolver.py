@@ -6,6 +6,7 @@ import numpy as np
 from qgates import CNOT10, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
     ACNOT01
 from qstates import State, is_state_normalized
+from qutils import get_probability
 from qvisualization import display_circuit
 
 
@@ -104,6 +105,25 @@ def substitute_custom_gates(state_shape, circuit):
     logging.info(circuit)
 
 
+def calculate_probability(how_many_bits, state):
+    print("bit zero prob: ")
+    print(state.shape)
+
+    prob = np.zeros(how_many_bits, dtype=complex)
+
+    for i in range(how_many_bits):
+        for idx, s in enumerate(state):
+            # print (int(2**i))
+            # print (bin(2**i))
+            # print (bin(idx))
+            a = idx & (2 ** i)
+            if a == 2 ** i:
+                print("in")
+                prob[i] += get_probability(s)
+
+    return prob
+
+
 def solve_circuit(states, circuit):
     state = calculate_initial_state(states)
 
@@ -149,4 +169,7 @@ def solve_circuit(states, circuit):
         state = apply_gate(complete, state)
         logging.warning("=")
         logging.warning(state)
-    return state
+
+    prob = calculate_probability(len(states), state)
+
+    return state, prob

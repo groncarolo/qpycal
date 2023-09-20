@@ -12,8 +12,8 @@ import numpy as np
 
 def p_circuit(p):
     '''circuit : states gates'''
-    ret = solve_circuit(p[1], p[2])
-    p[0] = ret, len(p[1])
+    ret, prob = solve_circuit(p[1], p[2])
+    p[0] = ret, prob, len(p[1])
 
 
 def p_factor(p):

@@ -131,3 +131,7 @@ def remove_global_phase(c):
         c[0] = polar_coordinates_2_complex(mag[0], 0)
         c[1] = polar_coordinates_2_complex(mag[1], ang[1] - ang[0])
     return c
+
+
+def get_probability(c):
+    return np.multiply(c, np.conjugate(c))
