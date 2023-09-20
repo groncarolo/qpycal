@@ -31,7 +31,7 @@ class XGate(Gate):
     Pauli X
     '''
     label = "X"
-    gate = np.array([[0, 1.], [1., 0]])
+    gate = np.array([[0, 1.], [1., 0]], dtype=complex)
 
     def __init__(self):
         pass
@@ -42,7 +42,7 @@ class YGate(Gate):
     Pauli Y
     '''
     label = "Y"
-    gate = np.array([[0., -1.j], [1.j, 0.]])
+    gate = np.array([[0., -1.j], [1.j, 0.]], dtype=complex)
 
     def __init__(self):
         pass
@@ -53,7 +53,7 @@ class ZGate(Gate):
     Pauli Z
     '''
     label = "Z"
-    gate = np.array([[1., 0.], [0., -1.]])
+    gate = np.array([[1., 0.], [0., -1.]], dtype=complex)
 
     def __init__(self):
         pass
@@ -67,7 +67,7 @@ class GenericZGate(Gate):
     gate = None
 
     def __init__(self, tetha):
-        self.gate = np.array([[1., 0.], [0., np.exp(1.j * tetha)]])
+        self.gate = np.array([[1., 0.], [0., np.exp(1.j * tetha)]], dtype=complex)
 
 
 class SGate(Gate):
@@ -75,7 +75,7 @@ class SGate(Gate):
     S Gate S^2 = Z
     '''
     label = "S"
-    gate = np.array([[1, 0], [0., 1.j]])
+    gate = np.array([[1, 0], [0., 1.j]], dtype=complex)
 
     def __init__(self):
         pass
@@ -86,7 +86,7 @@ class TGate(Gate):
     T Gate T^2 = S
     '''
     label = "T"
-    gate = np.array([[1., 0.], [0., np.exp(1.j * np.pi / 4.)]])
+    gate = np.array([[1., 0.], [0., np.exp(1.j * np.pi / 4.)]], dtype=complex)
 
     def __init__(self):
         pass
@@ -97,7 +97,7 @@ class HGate(Gate):
     Hadamard Gate
     '''
     label = "H"
-    gate = np.array([[1. / np.sqrt(2.), 1. / np.sqrt(2.)], [1. / np.sqrt(2.), -1. / np.sqrt(2.)]])
+    gate = np.array([[1. / np.sqrt(2.), 1. / np.sqrt(2.)], [1. / np.sqrt(2.), -1. / np.sqrt(2.)]], dtype=complex)
 
     def __init__(self):
         pass
@@ -108,7 +108,7 @@ class Identity(Gate):
     Identity matrix 2x2
     '''
     label = "I"
-    gate = np.identity(2)
+    gate = np.identity(2, dtype=complex)
 
     def __init__(self):
         pass
@@ -119,7 +119,7 @@ class Ctrl(Gate):
     Control
     '''
     label = "C"
-    gate = np.identity(2)
+    gate = np.identity(2, dtype=complex)
 
     def __init__(self):
         pass
@@ -130,7 +130,7 @@ class ACtrl(Gate):
     Anti-control
     '''
     label = "A"
-    gate = np.identity(2)
+    gate = np.identity(2, dtype=complex)
 
     def __init__(self):
         pass

@@ -29,7 +29,7 @@ class State0(State):
     State |0>
     '''
     label = "|0>"
-    state = np.array([1., 0.])
+    state = np.array([1., 0.], dtype=complex)
 
     def __init__(self):
         pass
@@ -39,52 +39,47 @@ class State1(State):
     '''
     State |1>
     '''
-    label = "|1>"
-    state = np.array([0., 1.])
 
     def __init__(self):
-        pass
+        self.label = "|1>"
+        self.state = np.array([0., 1.], dtype=complex)
 
 
 class StatePlus(State):
     '''
     State |+>
     '''
-    label = "|+>"
-    state = np.array([1. / np.sqrt(2.), 1. / np.sqrt(2.)])
 
     def __init__(self):
-        pass
+        self.label = "|+>"
+        self.state = np.array([1. / np.sqrt(2.), 1. / np.sqrt(2.)], dtype=complex)
 
 
 class StateMinus(State):
     '''
     State |->
     '''
-    label = "|->"
-    state = np.array([1. / np.sqrt(2.), -1. / np.sqrt(2.)])
 
     def __init__(self):
-        pass
+        self.label = "|->"
+        self.state = np.array([1. / np.sqrt(2.), -1. / np.sqrt(2.)], dtype=complex)
 
 
 class StateI(State):
     '''
     State |i>
     '''
-    label = "|i>"
-    state = np.array([1. / np.sqrt(2.), 1.j / np.sqrt(2.)])
 
     def __init__(self):
-        pass
+        self.label = "|i>"
+        self.state = np.array([1. / np.sqrt(2.), 1.j / np.sqrt(2.)], dtype=complex)
 
 
 class StateMinusI(State):
     '''
     State |-i>
     '''
-    label = "|-i>"
-    state = np.array([1. / np.sqrt(2.), -1.j / np.sqrt(2.)])
 
     def __init__(self):
-        pass
+        self.label = "|-i>"
+        self.state = np.array([1. / np.sqrt(2.), -1.j / np.sqrt(2.)], dtype=complex)
