@@ -13,5 +13,5 @@ testdata_calculate = [
 
 @pytest.mark.parametrize("in_str,res", testdata_calculate)
 def test_calculate(in_str, res):
-    result, in_len = parse_and_solve(in_str)
+    result, prob, in_len = parse_and_solve(in_str)
     assert np.allclose(result, res.flatten())
