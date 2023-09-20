@@ -15,13 +15,20 @@ def from_json_to_gate(json_str):
     return from_json_gate_dic.get(str(json_str), str(json_str))
 
 
+def from_json_file(j_file):
+    f = open(j_file)
+    circuit, result = from_json(f)
+    f.close()
+    return circuit, result
+
+
 def from_json(jstr):
     '''
     translate quirk circuit to qpycalc one
     :param jstr:
     :return:
     '''
-    j = json.loads(jstr)
+    j = json.load(jstr)
 
     how_many_states = len(j["circuit"]["init"])
 
@@ -41,12 +48,12 @@ def from_json(jstr):
 
     logging.info(circuit)
 
-    result = np.zeros(2**how_many_states, dtype=complex)
+    result = np.zeros(2 ** how_many_states, dtype=complex)
     i = 0
     for o in j["output_amplitudes"]:
         real = o["r"]
         imag = o["i"]
-        result[i] = float(real) + 1j*float(imag)
+        result[i] = float(real) + 1j * float(imag)
         i = i + 1
 
     return circuit, result
