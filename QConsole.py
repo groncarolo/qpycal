@@ -2,7 +2,7 @@ import cmd
 import logging
 import os.path
 
-from qjson import from_json
+from qjson import from_json_file
 from qparser import parse_and_solve
 from qvisualization import display_result
 
@@ -36,15 +36,15 @@ class QConsole(cmd.Cmd):
             readline.set_history_length(history_file_size)
             readline.write_history_file(history_file)
 
-    def do_solvejson(self, arg):
+    def do_json(self, arg):
         '''
         solve json defined circuit
         :param arg: json circuit
         :return:
         '''
-        circuit, result = from_json(arg)
-        ret, in_len = parse_and_solve(circuit)
-        display_result(ret, in_len)
+        circuit, result = from_json_file(arg)
+        ret, prob, in_len = parse_and_solve(circuit)
+        display_result(ret, prob, in_len)
 
     def do_solve(self, arg):
         '''
@@ -52,8 +52,8 @@ class QConsole(cmd.Cmd):
         :param arg: circuit
         :return:
         '''
-        ret, in_len = parse_and_solve(arg)
-        display_result(ret, in_len)
+        ret, prob, in_len = parse_and_solve(arg)
+        display_result(ret, prob, in_len)
 
     def do_debug(self, arg):
         '''
