@@ -120,18 +120,5 @@ def print_spherical_coordinates(r_ph_th):
     print(r_ph_th)
 
 
-def remove_global_phase(c):
-    '''
-    remove global phase from a complex number
-    :param c:
-    :return:
-    '''
-    mag, ang = complex_2_polar_coordinates(c)
-    if np.isclose(ang[0] / (np.pi / 4), -1.0) or np.isclose(ang[0] / (np.pi / 4), 1.0):
-        c[0] = polar_coordinates_2_complex(mag[0], 0)
-        c[1] = polar_coordinates_2_complex(mag[1], ang[1] - ang[0])
-    return c
-
-
 def get_probability(c):
     return np.multiply(c, np.conjugate(c))
