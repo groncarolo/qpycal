@@ -52,9 +52,9 @@ def display_result(ret, prob, in_len):
     print("values:")
     print(ret.reshape(b, a))
 
-    abs, angles = complex_2_polar_coordinates(ret)
+    mag, angles = complex_2_polar_coordinates(ret)
     print("mag^2:")
-    print(np.square(abs).reshape(b, a))
+    print(np.square(mag).reshape(b, a))
     print("phase:")
     print(rad_2_deg(angles).reshape(b, a))
 

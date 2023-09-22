@@ -12,10 +12,10 @@ except ImportError:
     readline = None
 
 history_file = os.path.expanduser('~/.qpycalc')
-history_file_size = 1000
+HISTORY_FILE_SIZE = 1000
 
 
-class QConsole(cmd.Cmd):
+class Qconsole(cmd.Cmd):
     intro = 'Welcome to the qpycal. order of gates is left -> bottom right -> top.\n'
     prompt = 'qpycal> '
 
@@ -33,7 +33,7 @@ class QConsole(cmd.Cmd):
         :return:
         '''
         if readline:
-            readline.set_history_length(history_file_size)
+            readline.set_history_length(HISTORY_FILE_SIZE)
             readline.write_history_file(history_file)
 
     def do_json(self, arg):
@@ -61,14 +61,14 @@ class QConsole(cmd.Cmd):
         :param arg:
         :return:
         '''
-        rootLogger = logging.getLogger()
-        logFormatter = logging.Formatter("%(message)s")
-        consoleHandler = logging.StreamHandler()
-        consoleHandler.setFormatter(logFormatter)
-        consoleHandler.setLevel(logging.WARNING)
-        rootLogger.addHandler(consoleHandler)
+        root_logger = logging.getLogger()
+        log_formatter = logging.Formatter("%(message)s")
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(log_formatter)
+        console_handler.setLevel(logging.WARNING)
+        root_logger.addHandler(console_handler)
         self.do_solve(arg)
-        rootLogger.removeHandler(consoleHandler)
+        root_logger.removeHandler(console_handler)
 
     def do_help(self, arg):
         '''
