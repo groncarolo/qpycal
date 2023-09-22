@@ -3,7 +3,7 @@ import logging
 from ply import yacc
 
 from qcustomgate import get_custom_gate
-from qgates import GenericZGate
+from qgates import GenericZGate, XGate, YGate, ZGate, GenericXGate, GenericYGate
 from qlexer import tokens
 from qsolver import solve_circuit
 
@@ -16,10 +16,19 @@ def p_circuit(p):
     p[0] = ret, prob, len(p[1])
 
 
+def p_float(p):
+    '''float : number
+             | minus number '''
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = -1 * p[1]
+
+
 def p_factor(p):
-    '''factor : number
-              | SQRT lparen number rparen
-              | number times SQRT lparen number rparen'''
+    '''factor : float
+              | SQRT lparen float rparen
+              | float  times SQRT lparen float rparen'''
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 5:
@@ -145,16 +154,22 @@ def p_custom_gate(p):
 
 def p_pi_factor(p):
     '''pi_factor : lparen PI rparen
-                 | lparen PI divide number rparen'''
+                 | lparen float rparen
+                 | lparen PI divide float rparen'''
     if len(p) == 4:
-        p[0] = np.pi
+        if p.slice[2].type == "number":
+            p[0] = np.deg2rad(p[2])
+        else:
+            p[0] = np.pi
     else:
         p[0] = np.pi / p[4]
 
 
 def p_gate(p):
     '''gate : gate_x
+           | gate_x pi_factor
            | gate_y
+           | gate_y pi_factor
            | gate_z
            | gate_z pi_factor
            | gate_s
@@ -169,7 +184,12 @@ def p_gate(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        p[0] = GenericZGate(p[2])
+        if isinstance(p[1], XGate):
+            p[0] = GenericXGate(p[2])
+        if isinstance(p[1], YGate):
+            p[0] = GenericYGate(p[2])
+        if isinstance(p[1], ZGate):
+            p[0] = GenericZGate(p[2])
 
 
 # Error rule for syntax errors

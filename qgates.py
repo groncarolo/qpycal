@@ -1,5 +1,4 @@
 import numpy as np
-import qutils
 from qunitary import get_unitary_gate_10, get_unitary_gate_01, get_generic_swap, get_cnot_actrl_10, get_cnot_actrl_01
 
 
@@ -16,14 +15,12 @@ def apply_gate(g: Gate, s):
     '''
     performs the dot product between
     gate g and state s
-    and eventually removes a global phase
     :rtype: np.array
     :param g: gate
     :param s: state matrix
     :return: result matrix
     '''
-    r = np.dot(g.gate, s)
-    return qutils.remove_global_phase(r)
+    return np.dot(g.gate, s)
 
 
 class XGate(Gate):
@@ -59,6 +56,31 @@ class ZGate(Gate):
         pass
 
 
+class GenericXGate(Gate):
+    '''
+    Generic Rotation
+    '''
+    label = "V"
+    gate = None
+
+    def __init__(self, theta):
+        self.gate = np.exp(1j * theta / 2.) * np.array([[np.cos(theta / 2), -1j * np.sin(theta / 2)],
+                                                        [-1j * np.sin(theta / 2), np.cos(theta / 2)]], dtype=complex)
+        print(self.gate)
+
+
+class GenericYGate(Gate):
+    '''
+    Generic Rotation
+    '''
+    label = "B"
+    gate = None
+
+    def __init__(self, th):
+        self.gate = np.exp(1j * th / 2.) * np.array([[np.cos(th / 2), - np.sin(th / 2)],
+                                                     [np.sin(th / 2), np.cos(th / 2)]], dtype=complex)
+
+
 class GenericZGate(Gate):
     '''
     Generic Rotation
@@ -66,8 +88,9 @@ class GenericZGate(Gate):
     label = "R"
     gate = None
 
-    def __init__(self, tetha):
-        self.gate = np.array([[1., 0.], [0., np.exp(1.j * tetha)]], dtype=complex)
+    def __init__(self, th):
+        self.gate = np.exp(+1j * th / 2.) * np.array([[np.exp(-1j * th / 2.), 0.],
+                                                      [0., np.exp(1j * th / 2.)]], dtype=complex)
 
 
 class SGate(Gate):

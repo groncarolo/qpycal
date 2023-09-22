@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ID PI SQRT divide gate_a gate_c gate_custom gate_h gate_i gate_s gate_swap gate_t gate_x gate_y gate_z i lbracket lparen minus number plus rbracket rparen state_0 state_1 state_i state_minus state_minus_i state_plus timescircuit : states gatesfactor : number\n              | SQRT lparen number rparen\n              | number times SQRT lparen number rparenoperand : minus\n               | plusfactors : factor\n               | factor divide factor\n               | lparen factor operand i times factor rparen divide factorstates : states times comp_state\n    | comp_statecomp_state : named_state\n                  | factors state\n                  | ID factors state\n                  | lbracket factors state operand factors state rbracket\n                  | ID lbracket factors state operand factors state rbracket\n                  named_state : ID state\n    | statestate : state_0\n    | state_1\n    | state_plus\n    | state_minus\n    | state_i\n    | state_minus_igates : gates gate\n              | gates times gate\n              | gatecustom_gate : gate_custom lparen ID rparen pi_factor : lparen PI rparen\n                 | lparen PI divide number rparengate : gate_x\n           | gate_y\n           | gate_z\n           | gate_z pi_factor\n           | gate_s\n           | gate_t\n           | gate_h\n           | gate_i\n           | gate_c\n           | gate_a\n           | gate_swap\n           | custom_gate\n    '
+_lr_signature = 'ID PI SQRT divide gate_a gate_c gate_custom gate_h gate_i gate_s gate_swap gate_t gate_x gate_y gate_z i lbracket lparen minus number plus rbracket rparen state_0 state_1 state_i state_minus state_minus_i state_plus timescircuit : states gatesfloat : number\n             | minus number factor : float\n              | SQRT lparen float rparen\n              | float  times SQRT lparen float rparenoperand : minus\n               | plusfactors : factor\n               | factor divide factor\n               | lparen factor operand i times factor rparen divide factorstates : states times comp_state\n    | comp_statecomp_state : named_state\n                  | factors state\n                  | ID factors state\n                  | lbracket factors state operand factors state rbracket\n                  | ID lbracket factors state operand factors state rbracket\n                  named_state : ID state\n    | statestate : state_0\n    | state_1\n    | state_plus\n    | state_minus\n    | state_i\n    | state_minus_igates : gates gate\n              | gates times gate\n              | gatecustom_gate : gate_custom lparen ID rparen pi_factor : lparen PI rparen\n                 | lparen float rparen\n                 | lparen PI divide float rparengate : gate_x\n           | gate_x pi_factor\n           | gate_y\n           | gate_y pi_factor\n           | gate_z\n           | gate_z pi_factor\n           | gate_s\n           | gate_t\n           | gate_h\n           | gate_i\n           | gate_c\n           | gate_a\n           | gate_swap\n           | custom_gate\n    '
     
-_lr_action_items = {'ID':([0,20,48,],[7,7,60,]),'lbracket':([0,7,20,],[8,37,8,]),'lparen':([0,7,8,18,20,24,33,37,54,55,56,62,69,],[10,10,10,42,10,47,48,10,-5,-6,64,10,10,]),'state_0':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[11,11,11,-7,-2,11,11,11,11,-8,-3,11,11,-4,-9,]),'state_1':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[12,12,12,-7,-2,12,12,12,12,-8,-3,12,12,-4,-9,]),'state_plus':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[13,13,13,-7,-2,13,13,13,13,-8,-3,13,13,-4,-9,]),'state_minus':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[14,14,14,-7,-2,14,14,14,14,-8,-3,14,14,-4,-9,]),'state_i':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[15,15,15,-7,-2,15,15,15,15,-8,-3,15,15,-4,-9,]),'state_minus_i':([0,5,7,9,17,20,35,38,50,52,65,70,74,77,84,],[16,16,16,-7,-2,16,16,16,16,-8,-3,16,16,-4,-9,]),'number':([0,7,8,10,20,37,39,42,54,55,62,64,67,69,71,83,],[17,17,17,17,17,17,17,57,-5,-6,17,72,73,17,17,17,]),'SQRT':([0,7,8,10,20,37,39,41,54,55,62,69,71,83,],[18,18,18,18,18,18,18,56,-5,-6,18,18,18,18,]),'$end':([1,19,21,22,23,24,25,26,27,28,29,30,31,32,43,46,58,66,68,78,],[0,-1,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-25,-34,-26,-29,-28,-30,]),'times':([2,3,4,6,11,12,13,14,15,16,17,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,45,46,49,58,63,66,68,78,80,82,],[20,-11,-12,-18,-19,-20,-21,-22,-23,-24,41,44,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,-10,-34,-14,-26,71,-29,-28,-30,-15,-16,]),'gate_x':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[22,-11,-12,-18,-19,-20,-21,-22,-23,-24,22,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,22,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_y':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[23,-11,-12,-18,-19,-20,-21,-22,-23,-24,23,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,23,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_z':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[24,-11,-12,-18,-19,-20,-21,-22,-23,-24,24,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,24,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_s':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[25,-11,-12,-18,-19,-20,-21,-22,-23,-24,25,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,25,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_t':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[26,-11,-12,-18,-19,-20,-21,-22,-23,-24,26,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,26,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_h':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[27,-11,-12,-18,-19,-20,-21,-22,-23,-24,27,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,27,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_i':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[28,-11,-12,-18,-19,-20,-21,-22,-23,-24,28,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,28,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_c':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[29,-11,-12,-18,-19,-20,-21,-22,-23,-24,29,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,29,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_a':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[30,-11,-12,-18,-19,-20,-21,-22,-23,-24,30,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,30,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_swap':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[31,-11,-12,-18,-19,-20,-21,-22,-23,-24,31,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,31,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'gate_custom':([2,3,4,6,11,12,13,14,15,16,19,21,22,23,24,25,26,27,28,29,30,31,32,34,36,43,44,45,46,49,58,66,68,78,80,82,],[33,-11,-12,-18,-19,-20,-21,-22,-23,-24,33,-27,-31,-32,-33,-35,-36,-37,-38,-39,-40,-41,-42,-13,-17,-25,33,-10,-34,-14,-26,-29,-28,-30,-15,-16,]),'divide':([9,17,59,65,77,81,],[39,-2,67,-3,-4,83,]),'minus':([11,12,13,14,15,16,17,40,51,61,65,77,],[-19,-20,-21,-22,-23,-24,-2,54,54,54,-3,-4,]),'plus':([11,12,13,14,15,16,17,40,51,61,65,77,],[-19,-20,-21,-22,-23,-24,-2,55,55,55,-3,-4,]),'rbracket':([11,12,13,14,15,16,75,79,],[-19,-20,-21,-22,-23,-24,80,82,]),'rparen':([17,57,59,60,65,72,73,76,77,],[-2,65,66,68,-3,77,78,81,-4,]),'PI':([47,],[59,]),'i':([53,54,55,],[63,-5,-6,]),}
+_lr_action_items = {'ID':([0,22,53,],[7,7,66,]),'lbracket':([0,7,22,],[8,39,8,]),'lparen':([0,7,8,18,22,24,25,26,35,39,59,60,61,68,76,],[10,10,10,44,10,50,50,50,53,10,-7,-8,70,10,10,]),'state_0':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[11,11,11,-9,-4,-2,11,11,11,-3,11,-10,-5,11,11,-6,-11,]),'state_1':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[12,12,12,-9,-4,-2,12,12,12,-3,12,-10,-5,12,12,-6,-11,]),'state_plus':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[13,13,13,-9,-4,-2,13,13,13,-3,13,-10,-5,13,13,-6,-11,]),'state_minus':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[14,14,14,-9,-4,-2,14,14,14,-3,14,-10,-5,14,14,-6,-11,]),'state_i':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[15,15,15,-9,-4,-2,15,15,15,-3,15,-10,-5,15,15,-6,-11,]),'state_minus_i':([0,5,7,9,17,19,22,37,40,45,55,57,71,77,81,84,91,],[16,16,16,-9,-4,-2,16,16,16,-3,16,-10,-5,16,16,-6,-11,]),'SQRT':([0,7,8,10,22,39,41,43,59,60,68,76,78,90,],[18,18,18,18,18,18,18,61,-7,-8,18,18,18,18,]),'number':([0,7,8,10,20,22,39,41,44,50,59,60,68,70,73,76,78,90,],[19,19,19,19,45,19,19,19,19,19,-7,-8,19,19,19,19,19,19,]),'minus':([0,7,8,10,11,12,13,14,15,16,17,19,22,39,41,42,44,45,50,56,59,60,67,68,70,71,73,76,78,84,90,],[20,20,20,20,-21,-22,-23,-24,-25,-26,-4,-2,20,20,20,59,20,-3,20,59,-7,-8,59,20,20,-5,20,20,20,-6,20,]),'$end':([1,21,23,24,25,26,27,28,29,30,31,32,33,34,46,49,51,52,63,72,74,75,85,],[0,-1,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-27,-35,-37,-39,-28,-31,-32,-30,-33,]),'times':([2,3,4,6,11,12,13,14,15,16,17,19,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,45,46,48,49,51,52,54,63,69,72,74,75,85,87,89,],[22,-13,-14,-20,-21,-22,-23,-24,-25,-26,43,-2,47,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-3,-27,-12,-35,-37,-39,-16,-28,78,-31,-32,-30,-33,-17,-18,]),'gate_x':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[24,-13,-14,-20,-21,-22,-23,-24,-25,-26,24,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,24,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_y':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[25,-13,-14,-20,-21,-22,-23,-24,-25,-26,25,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,25,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_z':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[26,-13,-14,-20,-21,-22,-23,-24,-25,-26,26,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,26,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_s':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[27,-13,-14,-20,-21,-22,-23,-24,-25,-26,27,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,27,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_t':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[28,-13,-14,-20,-21,-22,-23,-24,-25,-26,28,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,28,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_h':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[29,-13,-14,-20,-21,-22,-23,-24,-25,-26,29,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,29,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_i':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[30,-13,-14,-20,-21,-22,-23,-24,-25,-26,30,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,30,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_c':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[31,-13,-14,-20,-21,-22,-23,-24,-25,-26,31,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,31,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_a':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[32,-13,-14,-20,-21,-22,-23,-24,-25,-26,32,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,32,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_swap':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[33,-13,-14,-20,-21,-22,-23,-24,-25,-26,33,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,33,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'gate_custom':([2,3,4,6,11,12,13,14,15,16,21,23,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,51,52,54,63,72,74,75,85,87,89,],[35,-13,-14,-20,-21,-22,-23,-24,-25,-26,35,-29,-34,-36,-38,-40,-41,-42,-43,-44,-45,-46,-47,-15,-19,-27,35,-12,-35,-37,-39,-16,-28,-31,-32,-30,-33,-17,-18,]),'divide':([9,17,19,45,64,71,84,88,],[41,-4,-2,-3,73,-5,-6,90,]),'plus':([11,12,13,14,15,16,17,19,42,45,56,67,71,84,],[-21,-22,-23,-24,-25,-26,-4,-2,60,-3,60,60,-5,-6,]),'rbracket':([11,12,13,14,15,16,82,86,],[-21,-22,-23,-24,-25,-26,87,89,]),'rparen':([17,19,45,62,64,65,66,71,79,80,83,84,],[-4,-2,-3,71,72,74,75,-5,84,85,88,-6,]),'PI':([50,],[64,]),'i':([58,59,60,],[69,-7,-8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'circuit':([0,],[1,]),'states':([0,],[2,]),'comp_state':([0,20,],[3,45,]),'named_state':([0,20,],[4,4,]),'factors':([0,7,8,20,37,62,69,],[5,35,38,5,50,70,74,]),'state':([0,5,7,20,35,38,50,70,74,],[6,34,36,6,49,51,61,75,79,]),'factor':([0,7,8,10,20,37,39,62,69,71,83,],[9,9,9,40,9,9,52,9,9,76,84,]),'gates':([2,],[19,]),'gate':([2,19,44,],[21,43,58,]),'custom_gate':([2,19,44,],[32,32,32,]),'pi_factor':([24,],[46,]),'operand':([40,51,61,],[53,62,69,]),}
+_lr_goto_items = {'circuit':([0,],[1,]),'states':([0,],[2,]),'comp_state':([0,22,],[3,48,]),'named_state':([0,22,],[4,4,]),'factors':([0,7,8,22,39,68,76,],[5,37,40,5,55,77,81,]),'state':([0,5,7,22,37,40,55,77,81,],[6,36,38,6,54,56,67,82,86,]),'factor':([0,7,8,10,22,39,41,68,76,78,90,],[9,9,9,42,9,9,57,9,9,83,91,]),'float':([0,7,8,10,22,39,41,44,50,68,70,73,76,78,90,],[17,17,17,17,17,17,17,62,65,17,79,80,17,17,17,]),'gates':([2,],[21,]),'gate':([2,21,47,],[23,46,63,]),'custom_gate':([2,21,47,],[34,34,34,]),'pi_factor':([24,25,26,],[49,51,52,]),'operand':([42,56,67,],[58,68,76,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,46 +27,51 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> circuit","S'",1,None,None,None),
-  ('circuit -> states gates','circuit',2,'p_circuit','qparser.py',14),
-  ('factor -> number','factor',1,'p_factor','qparser.py',20),
-  ('factor -> SQRT lparen number rparen','factor',4,'p_factor','qparser.py',21),
-  ('factor -> number times SQRT lparen number rparen','factor',6,'p_factor','qparser.py',22),
-  ('operand -> minus','operand',1,'p_opearand','qparser.py',32),
-  ('operand -> plus','operand',1,'p_opearand','qparser.py',33),
-  ('factors -> factor','factors',1,'p_factors','qparser.py',38),
-  ('factors -> factor divide factor','factors',3,'p_factors','qparser.py',39),
-  ('factors -> lparen factor operand i times factor rparen divide factor','factors',9,'p_factors','qparser.py',40),
-  ('states -> states times comp_state','states',3,'p_states','qparser.py',51),
-  ('states -> comp_state','states',1,'p_states','qparser.py',52),
-  ('comp_state -> named_state','comp_state',1,'p_comp_states','qparser.py',61),
-  ('comp_state -> factors state','comp_state',2,'p_comp_states','qparser.py',62),
-  ('comp_state -> ID factors state','comp_state',3,'p_comp_states','qparser.py',63),
-  ('comp_state -> lbracket factors state operand factors state rbracket','comp_state',7,'p_comp_states','qparser.py',64),
-  ('comp_state -> ID lbracket factors state operand factors state rbracket','comp_state',8,'p_comp_states','qparser.py',65),
-  ('named_state -> ID state','named_state',2,'p_named_state','qparser.py',104),
-  ('named_state -> state','named_state',1,'p_named_state','qparser.py',105),
-  ('state -> state_0','state',1,'p_state','qparser.py',114),
-  ('state -> state_1','state',1,'p_state','qparser.py',115),
-  ('state -> state_plus','state',1,'p_state','qparser.py',116),
-  ('state -> state_minus','state',1,'p_state','qparser.py',117),
-  ('state -> state_i','state',1,'p_state','qparser.py',118),
-  ('state -> state_minus_i','state',1,'p_state','qparser.py',119),
-  ('gates -> gates gate','gates',2,'p_gates','qparser.py',124),
-  ('gates -> gates times gate','gates',3,'p_gates','qparser.py',125),
-  ('gates -> gate','gates',1,'p_gates','qparser.py',126),
-  ('custom_gate -> gate_custom lparen ID rparen','custom_gate',4,'p_custom_gate','qparser.py',142),
-  ('pi_factor -> lparen PI rparen','pi_factor',3,'p_pi_factor','qparser.py',146),
-  ('pi_factor -> lparen PI divide number rparen','pi_factor',5,'p_pi_factor','qparser.py',147),
-  ('gate -> gate_x','gate',1,'p_gate','qparser.py',154),
-  ('gate -> gate_y','gate',1,'p_gate','qparser.py',155),
-  ('gate -> gate_z','gate',1,'p_gate','qparser.py',156),
-  ('gate -> gate_z pi_factor','gate',2,'p_gate','qparser.py',157),
-  ('gate -> gate_s','gate',1,'p_gate','qparser.py',158),
-  ('gate -> gate_t','gate',1,'p_gate','qparser.py',159),
-  ('gate -> gate_h','gate',1,'p_gate','qparser.py',160),
-  ('gate -> gate_i','gate',1,'p_gate','qparser.py',161),
-  ('gate -> gate_c','gate',1,'p_gate','qparser.py',162),
-  ('gate -> gate_a','gate',1,'p_gate','qparser.py',163),
-  ('gate -> gate_swap','gate',1,'p_gate','qparser.py',164),
-  ('gate -> custom_gate','gate',1,'p_gate','qparser.py',165),
+  ('circuit -> states gates','circuit',2,'p_circuit','qparser.py',15),
+  ('float -> number','float',1,'p_float','qparser.py',20),
+  ('float -> minus number','float',2,'p_float','qparser.py',21),
+  ('factor -> float','factor',1,'p_factor','qparser.py',28),
+  ('factor -> SQRT lparen float rparen','factor',4,'p_factor','qparser.py',29),
+  ('factor -> float times SQRT lparen float rparen','factor',6,'p_factor','qparser.py',30),
+  ('operand -> minus','operand',1,'p_opearand','qparser.py',40),
+  ('operand -> plus','operand',1,'p_opearand','qparser.py',41),
+  ('factors -> factor','factors',1,'p_factors','qparser.py',46),
+  ('factors -> factor divide factor','factors',3,'p_factors','qparser.py',47),
+  ('factors -> lparen factor operand i times factor rparen divide factor','factors',9,'p_factors','qparser.py',48),
+  ('states -> states times comp_state','states',3,'p_states','qparser.py',59),
+  ('states -> comp_state','states',1,'p_states','qparser.py',60),
+  ('comp_state -> named_state','comp_state',1,'p_comp_states','qparser.py',69),
+  ('comp_state -> factors state','comp_state',2,'p_comp_states','qparser.py',70),
+  ('comp_state -> ID factors state','comp_state',3,'p_comp_states','qparser.py',71),
+  ('comp_state -> lbracket factors state operand factors state rbracket','comp_state',7,'p_comp_states','qparser.py',72),
+  ('comp_state -> ID lbracket factors state operand factors state rbracket','comp_state',8,'p_comp_states','qparser.py',73),
+  ('named_state -> ID state','named_state',2,'p_named_state','qparser.py',112),
+  ('named_state -> state','named_state',1,'p_named_state','qparser.py',113),
+  ('state -> state_0','state',1,'p_state','qparser.py',122),
+  ('state -> state_1','state',1,'p_state','qparser.py',123),
+  ('state -> state_plus','state',1,'p_state','qparser.py',124),
+  ('state -> state_minus','state',1,'p_state','qparser.py',125),
+  ('state -> state_i','state',1,'p_state','qparser.py',126),
+  ('state -> state_minus_i','state',1,'p_state','qparser.py',127),
+  ('gates -> gates gate','gates',2,'p_gates','qparser.py',132),
+  ('gates -> gates times gate','gates',3,'p_gates','qparser.py',133),
+  ('gates -> gate','gates',1,'p_gates','qparser.py',134),
+  ('custom_gate -> gate_custom lparen ID rparen','custom_gate',4,'p_custom_gate','qparser.py',150),
+  ('pi_factor -> lparen PI rparen','pi_factor',3,'p_pi_factor','qparser.py',155),
+  ('pi_factor -> lparen float rparen','pi_factor',3,'p_pi_factor','qparser.py',156),
+  ('pi_factor -> lparen PI divide float rparen','pi_factor',5,'p_pi_factor','qparser.py',157),
+  ('gate -> gate_x','gate',1,'p_gate','qparser.py',168),
+  ('gate -> gate_x pi_factor','gate',2,'p_gate','qparser.py',169),
+  ('gate -> gate_y','gate',1,'p_gate','qparser.py',170),
+  ('gate -> gate_y pi_factor','gate',2,'p_gate','qparser.py',171),
+  ('gate -> gate_z','gate',1,'p_gate','qparser.py',172),
+  ('gate -> gate_z pi_factor','gate',2,'p_gate','qparser.py',173),
+  ('gate -> gate_s','gate',1,'p_gate','qparser.py',174),
+  ('gate -> gate_t','gate',1,'p_gate','qparser.py',175),
+  ('gate -> gate_h','gate',1,'p_gate','qparser.py',176),
+  ('gate -> gate_i','gate',1,'p_gate','qparser.py',177),
+  ('gate -> gate_c','gate',1,'p_gate','qparser.py',178),
+  ('gate -> gate_a','gate',1,'p_gate','qparser.py',179),
+  ('gate -> gate_swap','gate',1,'p_gate','qparser.py',180),
+  ('gate -> custom_gate','gate',1,'p_gate','qparser.py',181),
 ]
