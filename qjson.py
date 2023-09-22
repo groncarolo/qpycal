@@ -16,9 +16,8 @@ def from_json_to_gate(json_str):
 
 
 def from_json_file(j_file):
-    f = open(j_file)
-    circuit, result = from_json(f)
-    f.close()
+    with open(j_file) as f:
+        circuit, result = from_json(f)
     return circuit, result
 
 

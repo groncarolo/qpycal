@@ -1,13 +1,12 @@
 import logging
 
 from ply import yacc
+import numpy as np
 
 from qcustomgate import get_custom_gate
 from qgates import GenericZGate, XGate, YGate, ZGate, GenericXGate, GenericYGate
 from qlexer import tokens
 from qsolver import solve_circuit
-
-import numpy as np
 
 
 def p_circuit(p):
