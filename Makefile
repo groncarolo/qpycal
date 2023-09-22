@@ -1,26 +1,26 @@
 SRC=\
+qconsole.py \
+qcustomgate.py \
 qgates.py \
 qjson.py \
 qlexer.py \
-qmath.py \
 qparser.py \
 qpycalc.py \
+qsolver.py \
 qstates.py \
 qunitary.py \
 qutils.py \
-test_qgates.py \
-test_qjson.py \
-test_qparser.py \
-test_qutils.py
+qvisualization.py
 
 
 all: tests
 
 tests:
-	pytest test_*.py
+	coverage run -m pytest test_*.py
+	coverage report -m
 
 pylint:
-	pylint --good-names "a,b,c,f,g,i,j,o,p,ph,r,s,s1,s2,t,th,v,x,y,z" $(SRC)
+	pylint --good-names "a,b,c,d,f,g,i,j,o,p,ph,r,s,s1,s2,t,th,v,x,y,z" $(SRC)
 
 flake:
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

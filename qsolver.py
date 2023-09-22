@@ -106,8 +106,8 @@ def substitute_custom_gates(state_shape, circuit):
 
 
 def calculate_probability(how_many_bits, state):
-    print("bit zero prob: ")
-    print(state.shape)
+    # print("bit zero prob: ")
+    # print(state.shape)
 
     prob = np.zeros(how_many_bits, dtype=complex)
 
@@ -118,7 +118,7 @@ def calculate_probability(how_many_bits, state):
             # print (bin(idx))
             a = idx & (2 ** i)
             if a == 2 ** i:
-                print("in")
+                # print("in")
                 prob[i] += get_probability(s)
 
     return prob
