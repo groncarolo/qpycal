@@ -39,17 +39,17 @@ you can also specify a states as
 qpycal supports the following gates
 
 ### X Gate
-X: X Pauli Gate NOT rotation of 180 deg on X axis
+X Pauli Gate NOT rotation of 180 deg on X axis
 
 ```python
-qpycal> solve |+>
-[[0.707]
- [0.707]]
+qpycal> solve |0> X
+[[0.+0.j]
+ [1.+0.j]]
 ```
 
 
 ### Y Gate
-Y: Y Pauli Gate rotation of 180 deg on Y axis
+Y Pauli Gate rotation of 180 deg on Y axis
 
 ```python
 qpycal> solve |+> Y
@@ -59,7 +59,7 @@ qpycal> solve |+> Y
 
 
 ### Z Gate
-Z: Z Pauli Gate rotation of 180 deg on Z axis
+Z Pauli Gate rotation of 180 deg on Z axis
 
 ```python
 qpycal> solve |i> Z
@@ -68,7 +68,7 @@ qpycal> solve |i> Z
 ```
 
 ### H Gate
-H: H Hadamard gate
+H Hadamard gate
 
 ```python
 qpycal> solve |0> H
@@ -84,9 +84,31 @@ phase:
 ```
 
 
+### X Generic Gate
+X Pauli Gate rotation of \theta rad or deg on Z axis
+
+```python
+qpycal> solve |i> X(pi/4.0)
+[[ 0.85355339+0.35355339j]
+ [-0.14644661+0.35355339j]]
+
+solve |i> X(45.0)
+[[4.32978028e-17+7.07106781e-01j]
+ [7.07106781e-01-4.32978028e-17j]]
+
+```
+
+### Y Generic Gate
+Y Pauli Gate rotation of \theta rad or deg on Z axis
+
+```python
+qpycal> solve |-i> Y(pi/2.0)
+[[1.11022302e-16+7.07106781e-01j]
+ [7.07106781e-01-1.11022302e-16j]]
+```
 
 ### Z Generic Gate
-Z: Z Pauli Gate rotation of \theta deg on Z axis
+Z Pauli Gate rotation of \theta rad or deg on Z axis
 
 ```python
 qpycal> solve |+> Z(pi/2.0)
