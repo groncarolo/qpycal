@@ -102,7 +102,22 @@ one = np.array([0.,1.])
 
 ide2 = np.identity(2)
 out0=np.outer (zero, np.conjugate(zero).T)
-a = np.kron(np.kron(out0, ide2), out0)
+out1=np.outer (one, np.conjugate(one).T)
+
+a = np.kron(np.kron(ide2, out0), out0)
+
+b = np.kron(np.kron(ide2, out0), out1)
+
+# c = np.kron(np.kron(out0, ide2), out1)
+# 
+# c = np.kron(np.kron(out1, ide2), out1)
+gnot = np.array([[0., 1.], [1., 0.]]) # not
+c = np.kron(np.kron(ide2, gnot), ide2)
+
+a+b+c
+
+
+
 E01 = np.outer (zero, np.conjugate(one).T)
 E10 = np.outer (one, np.conjugate(zero).T)
 b = np.kron(np.kron(E01, ide2), E10)
