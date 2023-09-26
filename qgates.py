@@ -158,8 +158,8 @@ class CNOT10(Gate):
     CNOT10
     '''
 
-    def __init__(self, state_shape):
-        super().__init__(get_unitary_gate_10(state_shape, XGate().gate),
+    def __init__(self, how_many_bits, ctrls):
+        super().__init__(get_unitary_gate_10(how_many_bits, ctrls, XGate().gate),
                          "CNOT10")
 
 
@@ -168,8 +168,8 @@ class CNOT01(Gate):
     CNOT01
     '''
 
-    def __init__(self, state_shape):
-        super().__init__(get_unitary_gate_01(state_shape, XGate().gate),
+    def __init__(self, how_many_bits, ctrls):
+        super().__init__(get_unitary_gate_01(how_many_bits, ctrls, XGate().gate),
                          "CNOT01")
 
 
@@ -191,6 +191,26 @@ class ACNOT01(Gate):
     def __init__(self, state_shape):
         super().__init__(get_cnot_actrl_01(state_shape),
                          "ACNOT01")
+
+
+class Toffoli10(Gate):
+    '''
+    Toffoli10
+    '''
+
+    def __init__(self, how_many_bits, ctrls):
+        super().__init__(get_unitary_gate_10(how_many_bits, ctrls, XGate().gate),
+                         "Toffoli10")
+
+
+class Toffoli01(Gate):
+    '''
+    Toffoli01
+    '''
+
+    def __init__(self, how_many_bits, ctrls):
+        super().__init__(get_unitary_gate_01(how_many_bits, ctrls, XGate().gate),
+                         "Toffoli01")
 
 
 class Swap(Gate):

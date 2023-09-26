@@ -1,10 +1,9 @@
 import logging
+import numpy as np
 from functools import reduce
 
-import numpy as np
-
 from qgates import CNOT10, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
-    ACNOT01
+    ACNOT01, Toffoli10, Toffoli01
 from qstates import State, is_state_normalized
 from qutils import get_probability
 from qvisualization import display_circuit
@@ -36,13 +35,23 @@ def substitute_cnot(col, ctrls, actrls, nots):
             start_index = ctrls[0]
             end_index = nots[0] + 1
             cnot = CNOT10
+            print("CONTROLS")
+            print(ctrls)
+            print("idx: " + str(end_index - start_index))
+
+            rctrls = [end_index - x - 2 for x in ctrls]
+            print("rctrls")
+            print(rctrls)
+
         else:
             start_index = nots[0]
             end_index = ctrls[0] + 1
             cnot = CNOT01
+            rctrls = ctrls
         # clean all the gates that are in between
         del col[start_index:end_index]
-        g = cnot(2 ** (end_index - start_index))
+
+        g = cnot(end_index - start_index, rctrls)
         col.insert(start_index, g)
     if len(actrls) == 1 and len(nots) == 1:
         # get the order of the gate
@@ -61,7 +70,37 @@ def substitute_cnot(col, ctrls, actrls, nots):
 
 
 def substitute_toffoli(col, ctrls, actrls, nots):
-    pass
+    '''
+    we accept ONE TOFFOLI per colum
+    :param ctrls:
+    :param actrls:
+    :param nots:
+    :return:
+    '''
+    # get the order of the gate
+    if len(ctrls) == 2 and len(nots) == 1:
+        if ctrls[0] < nots[0]:
+            start_index = ctrls[0]
+            end_index = nots[0] + 1
+            toffoli = Toffoli10
+            print("CONTROLS")
+            print("end_index")
+            print(str(end_index))
+            print("start_index")
+            print(str(start_index))
+            print(ctrls)
+            rctrls = [nots[0] - x for x in ctrls]
+            print("rctrls")
+            print(rctrls)
+        else:
+            start_index = nots[0]
+            end_index = ctrls[0] + 1
+            toffoli = Toffoli01
+            rctrls = ctrls
+        # clean all the gates that are in between
+        del col[start_index:end_index]
+        g = toffoli(end_index - start_index, rctrls)
+        col.insert(start_index, g)
 
 
 def substitute_swap(col, swaps):
