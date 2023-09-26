@@ -52,8 +52,8 @@ class Qconsole(cmd.Cmd):
         :param arg: circuit
         :return:
         '''
-        ret, prob, in_len = parse_and_solve(arg)
-        display_result(ret, prob, in_len)
+        ret, prob, labels, in_len, = parse_and_solve(arg)
+        display_result(ret, prob, labels, in_len)
 
     def do_debug(self, arg):
         '''

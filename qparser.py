@@ -11,8 +11,8 @@ from qsolver import solve_circuit
 
 def p_circuit(p):
     '''circuit : states gates'''
-    ret, prob = solve_circuit(p[1], p[2])
-    p[0] = ret, prob, len(p[1])
+    ret, prob, labels = solve_circuit(p[1], p[2])
+    p[0] = ret, prob, labels, len(p[1])
 
 
 def p_float(p):

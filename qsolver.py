@@ -1,10 +1,9 @@
 import logging
+import numpy as np
 from functools import reduce
 
-import numpy as np
-
-from qgates import CNOT10, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
-    ACNOT01
+from qgates import CNOT01, Gate, apply_gate, CNOT10, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT01, \
+    ACNOT10, Toffoli01, Toffoli10, AToffoli01, AToffoli10
 from qstates import State, is_state_normalized
 from qutils import get_probability
 from qvisualization import display_circuit
@@ -35,25 +34,28 @@ def substitute_cnot(col, ctrls, actrls, nots):
         if ctrls[0] < nots[0]:
             start_index = ctrls[0]
             end_index = nots[0] + 1
-            cnot = CNOT10
+            cnot = CNOT01
+            rctrls = [end_index - x - 2 for x in ctrls]
         else:
             start_index = nots[0]
             end_index = ctrls[0] + 1
-            cnot = CNOT01
+            cnot = CNOT10
+            rctrls = ctrls
         # clean all the gates that are in between
         del col[start_index:end_index]
-        g = cnot(2 ** (end_index - start_index))
+
+        g = cnot(end_index - start_index, rctrls)
         col.insert(start_index, g)
     if len(actrls) == 1 and len(nots) == 1:
         # get the order of the gate
         if actrls[0] < nots[0]:
             start_index = actrls[0]
             end_index = nots[0] + 1
-            acnot = ACNOT10
+            acnot = ACNOT01
         else:
             start_index = nots[0]
             end_index = actrls[0] + 1
-            acnot = ACNOT01
+            acnot = ACNOT10
         # clean all the gates that are in between
         del col[start_index:end_index]
         g = acnot(2 ** (end_index - start_index))
@@ -61,7 +63,48 @@ def substitute_cnot(col, ctrls, actrls, nots):
 
 
 def substitute_toffoli(col, ctrls, actrls, nots):
-    pass
+    '''
+    we accept ONE TOFFOLI per colum
+    :param ctrls:
+    :param actrls:
+    :param nots:
+    :return:
+    '''
+    # get the order of the gate
+    if len(ctrls) == 2 and len(nots) == 1:
+        if ctrls[0] < nots[0]:
+            start_index = ctrls[0]
+            end_index = nots[0] + 1
+            toffoli = Toffoli01
+            rctrls = [nots[0] - x for x in ctrls]
+        else:
+            start_index = nots[0]
+            end_index = ctrls[len(ctrls) - 1] + 1
+            toffoli = Toffoli10
+            rctrls = [x - start_index for x in ctrls]
+            rctrls.reverse()
+
+        # clean all the gates that are in between
+        del col[start_index:end_index]
+        g = toffoli(end_index - start_index, rctrls)
+        col.insert(start_index, g)
+
+    if len(actrls) == 2 and len(nots) == 1:
+        if actrls[0] < nots[0]:
+            start_index = actrls[0]
+            end_index = nots[0] + 1
+            toffoli = AToffoli01
+            ractrls = [abs(nots[0] - x) for x in actrls]
+        else:
+            start_index = nots[0]
+            end_index = actrls[len(actrls) - 1] + 1
+            toffoli = AToffoli10
+            ractrls = [abs(x - start_index) for x in actrls]
+            ractrls.reverse()
+        # clean all the gates that are in between
+        del col[start_index:end_index]
+        g = toffoli(end_index - start_index, ractrls)
+        col.insert(start_index, g)
 
 
 def substitute_swap(col, swaps):
@@ -106,19 +149,11 @@ def substitute_custom_gates(state_shape, circuit):
 
 
 def calculate_probability(how_many_bits, state):
-    # print("bit zero prob: ")
-    # print(state.shape)
-
     prob = np.zeros(how_many_bits, dtype=complex)
-
     for i in range(how_many_bits):
         for idx, s in enumerate(state):
-            # print (int(2**i))
-            # print (bin(2**i))
-            # print (bin(idx))
             a = idx & (2 ** i)
             if a == 2 ** i:
-                # print("in")
                 prob[i] += get_probability(s)
 
     return prob
@@ -171,5 +206,5 @@ def solve_circuit(states, circuit):
         logging.warning(state)
 
     prob = calculate_probability(len(states), state)
-
-    return state, prob
+    labels = [x.name for x in states]
+    return state, prob, labels

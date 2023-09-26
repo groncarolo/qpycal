@@ -14,5 +14,5 @@ def test_from_json():
             print(circuit)
             print(result)
 
-            my_result, prob, in_len = parse_and_solve(circuit)
+            my_result, prob, labels, in_len = parse_and_solve(circuit)
             assert np.allclose(result, my_result)
