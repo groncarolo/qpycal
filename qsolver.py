@@ -3,7 +3,7 @@ import numpy as np
 from functools import reduce
 
 from qgates import CNOT10, Gate, apply_gate, CNOT01, Ctrl, ACtrl, XGate, Swap, Identity, ACNOT10, \
-    ACNOT01, Toffoli10, Toffoli01
+    ACNOT01, Toffoli10, Toffoli01, AToffoli10, AToffoli01
 from qstates import State, is_state_normalized
 from qutils import get_probability
 from qvisualization import display_circuit
@@ -31,6 +31,7 @@ def substitute_cnot(col, ctrls, actrls, nots):
     '''
     if len(ctrls) == 1 and len(nots) == 1:
         # get the order of the gate
+        print("substitute_cnot")
         if ctrls[0] < nots[0]:
             start_index = ctrls[0]
             end_index = nots[0] + 1
@@ -79,6 +80,7 @@ def substitute_toffoli(col, ctrls, actrls, nots):
     '''
     # get the order of the gate
     if len(ctrls) == 2 and len(nots) == 1:
+        print("substitute_toffoli")
         if ctrls[0] < nots[0]:
             start_index = ctrls[0]
             end_index = nots[0] + 1
@@ -93,13 +95,66 @@ def substitute_toffoli(col, ctrls, actrls, nots):
             print("rctrls")
             print(rctrls)
         else:
+            print("nots")
+            print(nots)
             start_index = nots[0]
-            end_index = ctrls[0] + 1
+            end_index = ctrls[len(ctrls) - 1] + 1
             toffoli = Toffoli01
+
+            print("CONTROLS DDDDD")
+            print("end_index")
+            print(str(end_index))
+            print("start_index")
+            print(str(start_index))
+            print(ctrls)
+
+            rctrls = ctrls.reverse()
+
             rctrls = ctrls
+            print("rctrls")
+            print(rctrls)
         # clean all the gates that are in between
         del col[start_index:end_index]
         g = toffoli(end_index - start_index, rctrls)
+        col.insert(start_index, g)
+
+    if len(actrls) == 2 and len(nots) == 1:
+        print("substitute_atoffoli")
+        if actrls[0] < nots[0]:
+            start_index = actrls[0]
+            end_index = nots[0] + 1
+            toffoli = AToffoli10
+            print("ACONTROLS")
+            print("end_index")
+            print(str(end_index))
+            print("start_index")
+            print(str(start_index))
+            print(actrls)
+            ractrls = [nots[0] - x for x in actrls]
+            print("ractrls")
+            print(ractrls)
+        else:
+            print("nots")
+            print(nots)
+            start_index = nots[0]
+            end_index = actrls[len(actrls) - 1] + 1
+            toffoli = AToffoli01
+
+            print("CONTROLS DDDDD")
+            print("end_index")
+            print(str(end_index))
+            print("start_index")
+            print(str(start_index))
+            print(actrls)
+
+            ractrls = actrls.reverse()
+
+            ractrls = actrls
+            print("ractrls")
+            print(ractrls)
+        # clean all the gates that are in between
+        del col[start_index:end_index]
+        g = toffoli(end_index - start_index, ractrls)
         col.insert(start_index, g)
 
 
