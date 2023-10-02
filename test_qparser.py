@@ -141,6 +141,6 @@ testdata_solve = [
 
 @pytest.mark.parametrize("in_str,truth, in_prob", testdata_solve)
 def test_solve(in_str, truth, in_prob):
-    result, prob, in_len = parse_and_solve(in_str)
+    result, prob, labels, in_len = parse_and_solve(in_str)
     assert np.allclose(result, truth), "values"
     assert np.allclose(prob, in_prob), "prob"
