@@ -106,13 +106,16 @@ def substitute_toffoli(col, ctrls, actrls, nots):
             print(str(end_index))
             print("start_index")
             print(str(start_index))
+            print("ctrls")
             print(ctrls)
 
-            rctrls = ctrls.reverse()
-
-            rctrls = ctrls
+            rctrls = [x - start_index for x in ctrls]
             print("rctrls")
             print(rctrls)
+            rctrls.reverse()
+            print("rctrls rev")
+            print(rctrls)
+
         # clean all the gates that are in between
         del col[start_index:end_index]
         g = toffoli(end_index - start_index, rctrls)
@@ -130,7 +133,7 @@ def substitute_toffoli(col, ctrls, actrls, nots):
             print("start_index")
             print(str(start_index))
             print(actrls)
-            ractrls = [nots[0] - x for x in actrls]
+            ractrls = [abs(nots[0] - x) for x in actrls]
             print("ractrls")
             print(ractrls)
         else:
@@ -146,10 +149,10 @@ def substitute_toffoli(col, ctrls, actrls, nots):
             print("start_index")
             print(str(start_index))
             print(actrls)
+            # ractrls = [nots[0] - x for x in actrls]
+            ractrls = [abs(x - start_index) for x in actrls]
+            ractrls.reverse()
 
-            ractrls = actrls.reverse()
-
-            ractrls = actrls
             print("ractrls")
             print(ractrls)
         # clean all the gates that are in between
@@ -265,5 +268,5 @@ def solve_circuit(states, circuit):
         logging.warning(state)
 
     prob = calculate_probability(len(states), state)
-
-    return state, prob
+    labels = [x.name for x in states]
+    return state, prob, labels

@@ -32,7 +32,7 @@ def display_circuit(states, gates):
     print("")
 
 
-def display_result(ret, prob, in_len):
+def display_result(ret, prob, labels, in_len):
     '''
     display results: values, magnitudes and phases
     :param ret: result
@@ -58,9 +58,15 @@ def display_result(ret, prob, in_len):
     print("phase:")
     print(rad_2_deg(angles).reshape(b, a))
 
-    display_probability(prob)
+    display_probability(prob, labels)
 
 
-def display_probability(prob):
-    print("Prob ON")
+def display_probability(prob, labels):
+    print("Probability ON")
+    s = [len(x) for x in labels]
+    if any(s) > 0:
+        print(" ", end='')
+        for s in reversed(labels):
+            print(f'{s:<7}', end='')
+        print("")
     print(prob)
