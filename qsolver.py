@@ -31,19 +31,11 @@ def substitute_cnot(col, ctrls, actrls, nots):
     '''
     if len(ctrls) == 1 and len(nots) == 1:
         # get the order of the gate
-        print("substitute_cnot")
         if ctrls[0] < nots[0]:
             start_index = ctrls[0]
             end_index = nots[0] + 1
             cnot = CNOT10
-            print("CONTROLS")
-            print(ctrls)
-            print("idx: " + str(end_index - start_index))
-
             rctrls = [end_index - x - 2 for x in ctrls]
-            print("rctrls")
-            print(rctrls)
-
         else:
             start_index = nots[0]
             end_index = ctrls[0] + 1
@@ -80,41 +72,17 @@ def substitute_toffoli(col, ctrls, actrls, nots):
     '''
     # get the order of the gate
     if len(ctrls) == 2 and len(nots) == 1:
-        print("substitute_toffoli")
         if ctrls[0] < nots[0]:
             start_index = ctrls[0]
             end_index = nots[0] + 1
             toffoli = Toffoli10
-            print("CONTROLS")
-            print("end_index")
-            print(str(end_index))
-            print("start_index")
-            print(str(start_index))
-            print(ctrls)
             rctrls = [nots[0] - x for x in ctrls]
-            print("rctrls")
-            print(rctrls)
         else:
-            print("nots")
-            print(nots)
             start_index = nots[0]
             end_index = ctrls[len(ctrls) - 1] + 1
             toffoli = Toffoli01
-
-            print("CONTROLS DDDDD")
-            print("end_index")
-            print(str(end_index))
-            print("start_index")
-            print(str(start_index))
-            print("ctrls")
-            print(ctrls)
-
             rctrls = [x - start_index for x in ctrls]
-            print("rctrls")
-            print(rctrls)
             rctrls.reverse()
-            print("rctrls rev")
-            print(rctrls)
 
         # clean all the gates that are in between
         del col[start_index:end_index]
@@ -122,39 +90,17 @@ def substitute_toffoli(col, ctrls, actrls, nots):
         col.insert(start_index, g)
 
     if len(actrls) == 2 and len(nots) == 1:
-        print("substitute_atoffoli")
         if actrls[0] < nots[0]:
             start_index = actrls[0]
             end_index = nots[0] + 1
             toffoli = AToffoli10
-            print("ACONTROLS")
-            print("end_index")
-            print(str(end_index))
-            print("start_index")
-            print(str(start_index))
-            print(actrls)
             ractrls = [abs(nots[0] - x) for x in actrls]
-            print("ractrls")
-            print(ractrls)
         else:
-            print("nots")
-            print(nots)
             start_index = nots[0]
             end_index = actrls[len(actrls) - 1] + 1
             toffoli = AToffoli01
-
-            print("CONTROLS DDDDD")
-            print("end_index")
-            print(str(end_index))
-            print("start_index")
-            print(str(start_index))
-            print(actrls)
-            # ractrls = [nots[0] - x for x in actrls]
             ractrls = [abs(x - start_index) for x in actrls]
             ractrls.reverse()
-
-            print("ractrls")
-            print(ractrls)
         # clean all the gates that are in between
         del col[start_index:end_index]
         g = toffoli(end_index - start_index, ractrls)
@@ -203,19 +149,11 @@ def substitute_custom_gates(state_shape, circuit):
 
 
 def calculate_probability(how_many_bits, state):
-    # print("bit zero prob: ")
-    # print(state.shape)
-
     prob = np.zeros(how_many_bits, dtype=complex)
-
     for i in range(how_many_bits):
         for idx, s in enumerate(state):
-            # print (int(2**i))
-            # print (bin(2**i))
-            # print (bin(idx))
             a = idx & (2 ** i)
             if a == 2 ** i:
-                # print("in")
                 prob[i] += get_probability(s)
 
     return prob

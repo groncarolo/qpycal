@@ -32,10 +32,12 @@ def display_circuit(states, gates):
     print("")
 
 
-def display_result(ret, prob, labels, in_len):
+def display_result(values, prob, labels, in_len):
     '''
     display results: values, magnitudes and phases
-    :param ret: result
+    :param values: values
+    :param prob: probabilities
+    :param labels: labels
     :param in_len: len of result
     :return:
     '''
@@ -43,16 +45,16 @@ def display_result(ret, prob, labels, in_len):
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
     if (in_len % 2) == 0:
-        a = int(np.sqrt(ret.shape[0]))
-        b = int(np.sqrt(ret.shape[0]))
+        a = int(np.sqrt(values.shape[0]))
+        b = int(np.sqrt(values.shape[0]))
     else:
-        b = int(np.sqrt(ret.shape[0] * 2))
+        b = int(np.sqrt(values.shape[0] * 2))
         a = b // 2
 
     print("values:")
-    print(ret.reshape(b, a))
+    print(values.reshape(b, a))
 
-    mag, angles = complex_2_polar_coordinates(ret)
+    mag, angles = complex_2_polar_coordinates(values)
     print("mag^2:")
     print(np.square(mag).reshape(b, a))
     print("phase:")
@@ -62,6 +64,9 @@ def display_result(ret, prob, labels, in_len):
 
 
 def display_probability(prob, labels):
+    '''
+    display probabilities
+    '''
     print("Probability ON")
     s = [len(x) for x in labels]
     if any(s) > 0:

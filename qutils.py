@@ -121,4 +121,9 @@ def print_spherical_coordinates(r_ph_th):
 
 
 def get_probability(c):
+    '''
+    get probability for a complex number
+    probability is the quare norm
+    for a complex number |c|^2 = cc*
+    '''
     return np.multiply(c, np.conjugate(c))
