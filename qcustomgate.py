@@ -1,4 +1,4 @@
-from qgates import Identity, XGate, Ctrl, Gate
+from qgates import Identity, XGate, Ctrl, Gate, ACtrl
 
 
 class CustomGate(Gate):
@@ -29,9 +29,32 @@ def get_custom_gate(label):
     :param label: label of custom gate
     :return: custom gate if found
     '''
-    # left bottom
-    # right top
-    custom_gates = {"sum": CustomGate([[XGate(), Ctrl(), Identity()],
-                                       [XGate(), Identity(), Ctrl()]], "sum")}
+
+    custom_gates = {"cust": CustomGate([[XGate(), Ctrl(), Identity()],
+                                        [XGate(), Identity(), Ctrl()]], "cust"),
+
+                    "sum": CustomGate(
+                        [[Identity(), Identity(), Identity(), Identity(), XGate(), Identity(), Ctrl(),
+                          Identity()],
+                         [Identity(), Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(),
+                          Identity()],
+                         [Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(), Identity(),
+                          Identity()],
+                         [Identity(), Identity(), Identity(), XGate(), Identity(), Identity(), Identity(),
+                          Ctrl()],
+                         [Identity(), Identity(), XGate(), Identity(), Identity(), Ctrl(), Ctrl(), Identity()],
+                         [Identity(), XGate(), Identity(), Identity(), Ctrl(), Identity(), Identity(), Ctrl()],
+                         [
+                             XGate(), Identity(), Identity(), Identity(), Identity(), Identity(), Identity(),
+                             Identity()],
+                         [XGate(), ACtrl(), ACtrl(), Identity(), Identity(), Identity(), Identity(), Identity()],
+                         [Identity(), XGate(), Identity(), Identity(), Ctrl(), Identity(), Identity(), Ctrl()],
+                         [Identity(), Identity(), XGate(), Identity(), Identity(), Ctrl(), Ctrl(), Identity()],
+                         [Identity(), Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(),
+                          Identity()],
+                         [
+                             Identity(), Identity(), Identity(), Identity(), XGate(), Identity(), Ctrl(),
+                             Identity()]],
+                        "sum")}
     g = custom_gates.get(label)
     return g
