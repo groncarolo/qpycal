@@ -1,25 +1,24 @@
 import numpy as np
+from qstates import qstate_0, qstate_1
 
-from qstates import State0, State1
-
-zero = State0().state
-one = State1().state
+zero = qstate_0()
+one =  qstate_1()
 E00 = np.outer(zero, np.conjugate(zero).T)
 E01 = np.outer(zero, np.conjugate(one).T)
-E10 = np.outer(one, np.conjugate(zero).T)
-E11 = np.outer(one, np.conjugate(one).T)
+E10 = np.outer(one,  np.conjugate(zero).T)
+E11 = np.outer(one,  np.conjugate(one).T)
 ide2 = np.identity(2, dtype=complex)
 
 
-def get_cnot_ctrl_01(how_many_bits, ctrls, gate):
-    '''
+def get_cnot_ctrl_01(n, ctrls, gate):
+    """
     get a CNOT like
     # C
     # .
     # .
     # X
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     idex = np.identity(state_shape // 4)
     out = np.outer(zero, np.conjugate(zero).T)
     a = np.kron(np.kron(out, ide2), idex)
@@ -30,13 +29,13 @@ def get_cnot_ctrl_01(how_many_bits, ctrls, gate):
 
 
 def get_cnot_actrl_01(state_shape):
-    '''
+    """
     get a CNOT like
     # A
     # .
     # .
     # X
-    '''
+    """
     idex = np.identity(state_shape // 4, dtype=complex)
     gnot = np.array([[0., 1.], [1., 0.]], dtype=complex)  # not
     a = np.kron(E00, np.kron(idex, gnot))
@@ -46,8 +45,8 @@ def get_cnot_actrl_01(state_shape):
 
 # U
 # C
-def get_unitary_gate_01(how_many_bits, ctrls, gate):
-    '''
+def get_unitary_gate_01(n, ctrls, gate):
+    """
     get a TOFFOLI like
     # C
     # .
@@ -56,12 +55,12 @@ def get_unitary_gate_01(how_many_bits, ctrls, gate):
     # .
     # .
     # X
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     ret = np.zeros((state_shape, state_shape), dtype=complex)
 
-    for i in range(2 ** (how_many_bits - 2)):  # 8
-        binary = "{0:>0{1}b}".format(i, how_many_bits - 2)
+    for i in range(2 ** (n - 2)):  # 8
+        binary = "{0:>0{1}b}".format(i, n - 2)
         print(binary)
 
         if i in ctrls:
@@ -83,8 +82,8 @@ def get_unitary_gate_01(how_many_bits, ctrls, gate):
     return ret
 
 
-def get_unitary_agate_01(how_many_bits, ctrls, gate):
-    '''
+def get_unitary_agate_01(n, ctrls, gate):
+    """
     get a TOFFOLI like
     # A
     # .
@@ -93,15 +92,15 @@ def get_unitary_agate_01(how_many_bits, ctrls, gate):
     # .
     # .
     # X
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     ret = np.zeros((state_shape, state_shape), dtype=complex)
 
-    if how_many_bits == 2:
+    if n == 2:
         ret = np.kron(E11, gate)
     else:
-        for i in range(2 ** (how_many_bits - 2)):  # 8
-            binary = "{0:>0{1}b}".format(i, how_many_bits - 2)
+        for i in range(2 ** (n - 2)):  # 8
+            binary = "{0:>0{1}b}".format(i, n - 2)
             if i in ctrls:
                 pr = gate
             else:
@@ -121,15 +120,15 @@ def get_unitary_agate_01(how_many_bits, ctrls, gate):
     return ret
 
 
-def get_cnot_ctrl_10(how_many_bits, ctrls, gate):
-    '''
+def get_cnot_ctrl_10(n, ctrls, gate):
+    """
     get a CNOT like
     # X
     # .
     # .
     # C
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     iden = np.identity(state_shape // 4, dtype=complex)
     out = np.outer(zero, np.conjugate(zero).T)
     a = np.kron(np.kron(ide2, iden), out)
@@ -140,13 +139,13 @@ def get_cnot_ctrl_10(how_many_bits, ctrls, gate):
 
 
 def get_cnot_actrl_10(state_shape):
-    '''
+    """
     get a CNOT like
     # X
     # .
     # .
     # A
-    '''
+    """
     iden = np.identity(state_shape // 2, dtype=complex)
     idex = np.identity(state_shape // 4, dtype=complex)
 
@@ -156,8 +155,8 @@ def get_cnot_actrl_10(state_shape):
     return a + b + c
 
 
-def get_unitary_gate_10(how_many_bits, ctrls, gate):
-    '''
+def get_unitary_gate_10(n, ctrls, gate):
+    """
     get a TOFFOLI like
     # X
     # .
@@ -166,8 +165,8 @@ def get_unitary_gate_10(how_many_bits, ctrls, gate):
     # .
     # .
     # C
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     if ctrls[0] - ctrls[1] == 1:
         x = 2 ** ctrls[1]
         r = np.kron(np.identity(x), np.kron(E00, np.identity(2)))
@@ -193,8 +192,8 @@ def get_unitary_gate_10(how_many_bits, ctrls, gate):
     return r
 
 
-def get_unitary_agate_10(how_many_bits, ctrls, gate):
-    '''
+def get_unitary_agate_10(n, ctrls, gate):
+    """
     get a TOFFOLI like
     # X
     # .
@@ -203,8 +202,8 @@ def get_unitary_agate_10(how_many_bits, ctrls, gate):
     # .
     # .
     # A
-    '''
-    state_shape = 2 ** how_many_bits
+    """
+    state_shape = 2 ** n
     if ctrls[0] - ctrls[1] == 1:
         x = 2 ** ctrls[1]
         r = np.kron(np.identity(x), np.kron(E11, np.identity(2)))
@@ -232,9 +231,9 @@ def get_unitary_agate_10(how_many_bits, ctrls, gate):
 
 # SWAP1,3=|0⟩⟨0|⊗I⊗|0⟩⟨0|+E01⊗I⊗E10+E10⊗I⊗E01+|1⟩⟨1|⊗I⊗|1⟩⟨1|
 def get_generic_swap(state_shape):
-    '''
+    """
     get a swap gate
-    '''
+    """
     idex = np.identity(state_shape // 4, dtype=complex)
     out0 = np.outer(zero, np.conjugate(zero).T)
     a = np.kron(np.kron(out0, idex), out0)
