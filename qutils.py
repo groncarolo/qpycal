@@ -1,5 +1,7 @@
 ''' qutils module: various coordinates conversion utility
 complex to spherical or cartesian coordinates'''
+from numbers import Complex
+
 import numpy as np
 
 
@@ -34,7 +36,7 @@ def cartesian_2_spherical_coordinates(xyz):
     return np.array([r, rad_2_deg(ph), rad_2_deg(th)])
 
 
-def complex_2_cartesian_coordinates(c):
+def complex_2_cartesian_coordinates(c: Complex):
     '''
     converts a complex number into cartesian coordinates
     :param c: complex number
@@ -120,7 +122,7 @@ def print_spherical_coordinates(r_ph_th):
     print(r_ph_th)
 
 
-def get_probability(c):
+def get_probability(c) -> int:
     '''
     get probability for a complex number
     probability is the quare norm
