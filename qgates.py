@@ -1,249 +1,169 @@
+"""
+>>> g = xgate()
+>>> g
+QGate(_gate=array([[0.+0.j, 1.+0.j],
+       [1.+0.j, 0.+0.j]]), _label='X', _is_custom=False)
+
+"""
+
+from dataclasses import dataclass
 import numpy as np
-from qunitary import get_unitary_gate_10, get_unitary_gate_01, \
-    get_generic_swap, get_cnot_actrl_10, get_cnot_actrl_01, get_cnot_ctrl_10, get_unitary_agate_10, \
-    get_unitary_agate_01, get_cnot_ctrl_01
+from qstates import QState
+from qunitary import get_cnot_ctrl_10, get_cnot_ctrl_01, get_generic_swap, get_cnot_actrl_10, get_cnot_actrl_01, \
+    get_unitary_gate_10, get_unitary_gate_01, get_unitary_agate_01, get_unitary_agate_10
 
 
-class Gate:
-    # gate = None
-    # is_custom = False
-    # label = ""
+@dataclass(eq=False)
+class QGate:
+    """ Quantum Gate class """
+    gate: np.ndarray
+    label: str = str()
+    is_custom: bool = False
 
-    def __init__(self, g, label="", is_custom=False):
-        self.gate = g
-        self.is_custom = is_custom
-        self.label = label
+    def __eq__(self, other):
+        return (self.gate.shape == other.gate.shape and
+                (self.gate == other.gate).all())
 
+    def __array__(self):
+        return self.gate
 
-def apply_gate(g: Gate, s):
-    '''
-    performs the dot product between
-    gate g and state s
-    :rtype: np.array
-    :param g: gate
-    :param s: state matrix
-    :return: result matrix
-    '''
-    return np.dot(g.gate, s)
+    def apply(self, state: QState) -> 'QState':
+        """
+        performs the dot product between
+        gate g and state s
+        :param state
+        :return: resulting QState
+        """
+        return QState(np.squeeze(np.dot(self.gate, state.state)))
 
 
-class XGate(Gate):
-    '''
-    Pauli X
-    '''
+def xgate() -> 'QGate':
+    """ Pauli X """
+    arr = np.array([[0, 1.], [1., 0]], dtype=complex)
+    return QGate(arr, "X")
 
-    def __init__(self):
-        super().__init__(np.array([[0, 1.], [1., 0]], dtype=complex),
-                         "X")
 
+def ygate() -> 'QGate':
+    """ Pauli Y """
+    arr = np.array([[0., -1.j], [1.j, 0.]], dtype=complex)
+    return QGate(arr, "Y")
 
-class YGate(Gate):
-    '''
-    Pauli Y
-    '''
 
-    def __init__(self):
-        super().__init__(np.array([[0., -1.j], [1.j, 0.]], dtype=complex),
-                         "Y")
+def zgate() -> 'QGate':
+    """ Pauli Z """
+    arr = np.array([[1., 0.], [0., -1.]], dtype=complex)
+    return QGate(arr, "Z")
 
 
-class ZGate(Gate):
-    '''
-    Pauli Z
-    '''
+def generic_xgate(theta: float) -> 'QGate':
+    """ Generic X Rotation """
+    arr = np.array([[np.cos(theta / 2), -1j * np.sin(theta / 2)],
+                    [-1j * np.sin(theta / 2), np.cos(theta / 2)]], dtype=complex)
+    return QGate(np.exp(1j * theta / 2.) * arr, "V")
 
-    def __init__(self):
-        super().__init__(np.array([[1., 0.], [0., -1.]], dtype=complex),
-                         "Z")
 
+def generic_ygate(theta: float) -> 'QGate':
+    """ Generic Y Rotation """
+    arr = np.array([[np.cos(theta / 2), - np.sin(theta / 2)],
+                    [np.sin(theta / 2), np.cos(theta / 2)]],
+                   dtype=complex)
+    return QGate(np.exp(1j * theta / 2.) * arr, "B")
 
-class GenericXGate(Gate):
-    '''
-    Generic X Rotation
-    '''
 
-    def __init__(self, theta):
-        super().__init__(
-            np.exp(1j * theta / 2.) * np.array([[np.cos(theta / 2), -1j * np.sin(theta / 2)],
-                                                [-1j * np.sin(theta / 2), np.cos(theta / 2)]], dtype=complex),
-            "V")
+def generic_zgate(theta: float) -> 'QGate':
+    """ Generic Z Rotation """
+    arr = np.array([[np.exp(-1j * theta / 2.), 0.],
+                    [0., np.exp(1j * theta / 2.)]],
+                   dtype=complex)
+    return QGate(np.exp(+1j * theta / 2.) * arr, "R")
 
 
-class GenericYGate(Gate):
-    '''
-    Generic Rotation
-    '''
+def sgate() -> 'QGate':
+    """ S Gate S^2 = Z """
+    arr = np.array([[1, 0], [0., 1.j]], dtype=complex)
+    return QGate(arr, "S")
 
-    def __init__(self, th):
-        super().__init__(np.exp(1j * th / 2.) * np.array([[np.cos(th / 2), - np.sin(th / 2)],
-                                                          [np.sin(th / 2), np.cos(th / 2)]],
-                                                         dtype=complex),
-                         "B")
 
+def tgate() -> 'QGate':
+    """ T Gate T^2 = S """
+    arr = np.array([[1., 0.], [0., np.exp(1.j * np.pi / 4.)]], dtype=complex)
+    return QGate(arr, "T")
 
-class GenericZGate(Gate):
-    '''
-    Generic Rotation
-    '''
 
-    def __init__(self, th):
-        super().__init__(np.exp(+1j * th / 2.) * np.array([[np.exp(-1j * th / 2.), 0.],
-                                                           [0., np.exp(1j * th / 2.)]],
-                                                          dtype=complex),
-                         "R")
+def hgate() -> 'QGate':
+    """ Hadamard Gate """
+    arr = np.array([[1. / np.sqrt(2.), 1. / np.sqrt(2.)],
+                    [1. / np.sqrt(2.), -1. / np.sqrt(2.)]], dtype=complex)
+    return QGate(arr, "H")
 
 
-class SGate(Gate):
-    '''
-    S Gate S^2 = Z
-    '''
+def identity_gate(n=2) -> 'QGate':
+    """ Identity matrix 2x2 """
+    arr = np.identity(n, dtype=complex)
+    return QGate(arr, "I")
 
-    def __init__(self):
-        super().__init__(np.array([[1, 0], [0., 1.j]], dtype=complex),
-                         "S")
 
+def ctrl_gate() -> 'QGate':
+    """ Control """
+    return QGate(np.identity(2, dtype=complex), "C")
 
-class TGate(Gate):
-    '''
-    T Gate T^2 = S
-    '''
 
-    def __init__(self):
-        super().__init__(np.array([[1., 0.], [0., np.exp(1.j * np.pi / 4.)]], dtype=complex),
-                         "T")
+def actrl_gate() -> 'QGate':
+    """ Anti-Control """
+    return QGate(np.identity(2, dtype=complex), "A")
 
 
-class HGate(Gate):
-    '''
-    Hadamard Gate
-    '''
+def cnot10_gate(n, ctrls) -> 'QGate':
+    """ CNOT10 """
+    arr = get_cnot_ctrl_10(n, ctrls, xgate())
+    return QGate(arr, "CNOT10")
 
-    def __init__(self):
-        super().__init__(
-            np.array([[1. / np.sqrt(2.), 1. / np.sqrt(2.)], [1. / np.sqrt(2.), -1. / np.sqrt(2.)]], dtype=complex),
-            "H")
 
+def cnot01_gate(n, ctrls) -> 'QGate':
+    """ CNOT01 """
+    arr = get_cnot_ctrl_01(n, ctrls, xgate())
+    return QGate(arr, "CNOT01")
 
-class Identity(Gate):
-    '''
-    Identity matrix 2x2
-    '''
 
-    def __init__(self):
-        super().__init__(np.identity(2, dtype=complex),
-                         "I")
+# TODO: why different signature????
+def acnot10_gate(n) -> 'QGate':
+    """ ACNOT10 """
+    arr = get_cnot_actrl_10(n)
+    return QGate(arr, "ACNOT10")
 
 
-class Ctrl(Gate):
-    '''
-    Control
-    '''
+# TODO: why different signature????
+def acnot01_gate(n) -> 'QGate':
+    """ CNOT01 """
+    arr = get_cnot_actrl_01(n)
+    return QGate(arr, "CNOT01")
 
-    def __init__(self):
-        super().__init__(np.identity(2, dtype=complex),
-                         "C")
 
+def toffoli10_gate(n, ctrls) -> 'QGate':
+    """ Toffoli10 """
+    arr = get_unitary_gate_10(n, ctrls, xgate()),
+    return QGate(arr, "Toffoli10")
 
-class ACtrl(Gate):
-    '''
-    Anti-control
-    '''
 
-    def __init__(self):
-        super().__init__(np.identity(2, dtype=complex),
-                         "A")
+def toffoli01_gate(n, ctrls) -> 'QGate':
+    """ Toffoli01 """
+    arr = get_unitary_gate_01(n, ctrls, xgate()),
+    return QGate(arr, "Toffoli01")
 
 
-class CNOT10(Gate):
-    '''
-    CNOT10
-    '''
+def atoffoli10_gate(n, ctrls) -> 'QGate':
+    """ AToffoli10 """
+    arr = get_unitary_agate_10(n, ctrls, xgate()),
+    return QGate(arr, "AToffoli10")
 
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_cnot_ctrl_10(how_many_bits, ctrls, XGate().gate),
-                         "CNOT10")
 
+def atoffoli01_gate(n, ctrls) -> 'QGate':
+    """ AToffoli01 """
+    arr = get_unitary_agate_01(n, ctrls, xgate()),
+    return QGate(arr, "AToffoli01")
 
-class CNOT01(Gate):
-    '''
-    CNOT01
-    '''
 
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_cnot_ctrl_01(how_many_bits, ctrls, XGate().gate),
-                         "CNOT01")
-
-
-class ACNOT10(Gate):
-    '''
-    ACNOT10
-    '''
-
-    def __init__(self, state_shape):
-        super().__init__(get_cnot_actrl_10(state_shape),
-                         "ACNOT10")
-
-
-class ACNOT01(Gate):
-    '''
-    ACNOT01
-    '''
-
-    def __init__(self, state_shape):
-        super().__init__(get_cnot_actrl_01(state_shape),
-                         "ACNOT01")
-
-
-class Toffoli10(Gate):
-    '''
-    Toffoli10
-    '''
-
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_unitary_gate_10(how_many_bits, ctrls, XGate().gate),
-                         "Toffoli10")
-
-
-class Toffoli01(Gate):
-    '''
-    Toffoli01
-    '''
-
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_unitary_gate_01(how_many_bits, ctrls, XGate().gate),
-                         "Toffoli01")
-
-
-class AToffoli10(Gate):
-    '''
-    AToffoli10
-    '''
-
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_unitary_agate_10(how_many_bits, ctrls, XGate().gate),
-                         "AToffoli10")
-
-
-class AToffoli01(Gate):
-    '''
-    AToffoli01
-    '''
-
-    def __init__(self, how_many_bits, ctrls):
-        super().__init__(get_unitary_agate_01(how_many_bits, ctrls, XGate().gate),
-                         "AToffoli01")
-
-
-class Swap(Gate):
-    '''
-    Swap gate
-    '''
-    label = "W"
-
-    def __init__(self, state_shape=-1):
-        if state_shape != -1:
-            super().__init__(get_generic_swap(state_shape),
-                             "SWAP")
-        else:
-            super().__init__(None,
-                             "SWAP")
+def swap_gate(n=None) -> 'QGate':
+    """ Swap """
+    arr = get_generic_swap(n) if n is not None else None;
+    return QGate(arr, "W")

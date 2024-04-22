@@ -1,7 +1,7 @@
-from qgates import Identity, XGate, Ctrl, Gate, ACtrl
+from qgates import QGate, identity_gate, xgate, ctrl_gate, actrl_gate
 
 
-class CustomGate(Gate):
+class QCustomGate(QGate):
     gates = []
 
     def get_len(self):
@@ -29,32 +29,24 @@ def get_custom_gate(label):
     :param label: label of custom gate
     :return: custom gate if found
     '''
+    pass
 
-    custom_gates = {"cust": CustomGate([[XGate(), Ctrl(), Identity()],
-                                        [XGate(), Identity(), Ctrl()]], "cust"),
+    custom_gates = {"cust": QCustomGate([[xgate(), ctrl_gate(), identity_gate()],
+                                    [xgate(), identity_gate(), ctrl_gate()]], "cust"),
 
-                    "sum": CustomGate(
-                        [[Identity(), Identity(), Identity(), Identity(), XGate(), Identity(), Ctrl(),
-                          Identity()],
-                         [Identity(), Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(),
-                          Identity()],
-                         [Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(), Identity(),
-                          Identity()],
-                         [Identity(), Identity(), Identity(), XGate(), Identity(), Identity(), Identity(),
-                          Ctrl()],
-                         [Identity(), Identity(), XGate(), Identity(), Identity(), Ctrl(), Ctrl(), Identity()],
-                         [Identity(), XGate(), Identity(), Identity(), Ctrl(), Identity(), Identity(), Ctrl()],
-                         [
-                             XGate(), Identity(), Identity(), Identity(), Identity(), Identity(), Identity(),
-                             Identity()],
-                         [XGate(), ACtrl(), ACtrl(), Identity(), Identity(), Identity(), Identity(), Identity()],
-                         [Identity(), XGate(), Identity(), Identity(), Ctrl(), Identity(), Identity(), Ctrl()],
-                         [Identity(), Identity(), XGate(), Identity(), Identity(), Ctrl(), Ctrl(), Identity()],
-                         [Identity(), Identity(), Identity(), Identity(), XGate(), Ctrl(), Identity(),
-                          Identity()],
-                         [
-                             Identity(), Identity(), Identity(), Identity(), XGate(), Identity(), Ctrl(),
-                             Identity()]],
-                        "sum")}
+                "sum": QCustomGate(
+                    [[identity_gate(), identity_gate(), identity_gate(), identity_gate(), xgate(), identity_gate(), ctrl_gate(), identity_gate()],
+                     [identity_gate(), identity_gate(), identity_gate(), identity_gate(), xgate(), ctrl_gate(), identity_gate(), identity_gate()],
+                     [identity_gate(), identity_gate(), identity_gate(), xgate(), ctrl_gate(), identity_gate(), identity_gate(), identity_gate()],
+                     [identity_gate(), identity_gate(), identity_gate(), xgate(), identity_gate(), identity_gate(), identity_gate(), ctrl_gate()],
+                     [identity_gate(), identity_gate(), xgate(), identity_gate(), identity_gate(), ctrl_gate(), ctrl_gate(), identity_gate()],
+                     [identity_gate(), xgate(), identity_gate(), identity_gate(), ctrl_gate(), identity_gate(), identity_gate(), ctrl_gate()],
+                     [ xgate(), identity_gate(), identity_gate(), identity_gate(), identity_gate(), identity_gate(), identity_gate(), identity_gate()],
+                     [xgate(), actrl_gate(), actrl_gate(), identity_gate(), identity_gate(), identity_gate(), identity_gate(), identity_gate()],
+                     [identity_gate(), xgate(), identity_gate(), identity_gate(), ctrl_gate(), identity_gate(), identity_gate(), ctrl_gate()],
+                     [identity_gate(), identity_gate(), xgate(), identity_gate(), identity_gate(), ctrl_gate(), ctrl_gate(), identity_gate()],
+                     [identity_gate(), identity_gate(), identity_gate(), identity_gate(), xgate(), ctrl_gate(), identity_gate(), identity_gate()],
+                     [ identity_gate(), identity_gate(), identity_gate(), identity_gate(), xgate(), identity_gate(), ctrl_gate(), identity_gate()]],
+                    "sum")}
     g = custom_gates.get(label)
     return g

@@ -4,6 +4,7 @@ from ply import lex
 
 import qgates
 import qstates
+from qgates import QGate
 
 reserved = {
     'sqrt': 'SQRT',
@@ -51,97 +52,97 @@ tokens = [
 
 def t_state_0(t):
     r'\|0\>'
-    t.value = qstates.State0()
+    t.value = qstates.qstate_0()
     return t
 
 
 def t_state_1(t):
     r'\|1\>'
-    t.value = qstates.State1()
+    t.value = qstates.qstate_1()
     return t
 
 
 def t_state_plus(t):
     r'\|\+\>'
-    t.value = qstates.StatePlus()
+    t.value = qstates.qstate_plus()
     return t
 
 
 def t_state_minus(t):
     r'\|\-\>'
-    t.value = qstates.StateMinus()
+    t.value = qstates.qstate_minus()
     return t
 
 
 def t_state_i(t):
     r'\|i\>'
-    t.value = qstates.StateI()
+    t.value = qstates.qstate_i()
     return t
 
 
 def t_state_minus_i(t):
     r'\|\-i\>'
-    t.value = qstates.StateMinusI()
+    t.value = qstates.qstate_minus_i()
     return t
 
 
 def t_gate_x(t):
     'X'
-    t.value = qgates.XGate()
+    t.value = qgates.xgate()
     return t
 
 
 def t_gate_y(t):
     'Y'
-    t.value = qgates.YGate()
+    t.value = qgates.ygate()
     return t
 
 
 def t_gate_z(t):
     'Z'
-    t.value = qgates.ZGate()
+    t.value = qgates.zgate()
     return t
 
 
 def t_gate_s(t):
     'S'
-    t.value = qgates.SGate()
+    t.value = qgates.sgate()
     return t
 
 
 def t_gate_t(t):
     'T'
-    t.value = qgates.TGate()
+    t.value = qgates.tgate()
     return t
 
 
-def t_gate_h(t):
+def t_gate_h(t) -> 'QGate':
     'H'
-    t.value = qgates.HGate()
+    t.value = qgates.hgate()
     return t
 
 
 def t_gate_i(t):
     'I'
-    t.value = qgates.Identity()
+    t.value = qgates.identity_gate()
     return t
 
 
 def t_gate_c(t):
     'C'
-    t.value = qgates.Ctrl()
+    t.value = qgates.ctrl_gate()
     return t
 
 
 def t_gate_a(t):
     'A'
-    t.value = qgates.ACtrl()
+    t.value = qgates.actrl_gate()
     return t
 
 
 def t_gate_swap(t):
     'W'
-    t.value = qgates.Swap()
+    t.value = qgates.swap_gate()
     return t
 
 
@@ -204,7 +205,7 @@ lexer = lex.lex()
 
 ###################################
 # tests
-data = '''
+data = """
 |0>
 |1>
 |+>
@@ -232,7 +233,7 @@ string
 [
 ]
 i
-'''
+"""
 # Give the lexer some input
 lexer.input(data)
 
