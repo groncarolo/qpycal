@@ -1,7 +1,7 @@
 # qpycalc
 
 
-qpycalc is a quantum gate calculator
+qpycalc is a quantum circuit calculator
 
 Its aim is to solve small quantum circuits specified with Dirac's notation
 
